@@ -26,3 +26,8 @@ Route::get('/supplier/destroy/{id}', [SupplierController::class, 'destroy']);
 use App\Http\Controllers\MenuMakananController;
 Route::resource('menu_makanan', MenuMakananController::class);
 Route::get('/menu_makanan/destroy/{id}', [MenuMakananController::class, 'destroy']);
+
+//KING ARAN
+use App\Http\Controllers\KaryawanController;
+Route::resource('karyawan', KaryawanController::class);
+Route::get('/karyawan/destroy/{id}', [KaryawanController::class, 'destroy']);
