@@ -77,6 +77,13 @@
             <span class="hide-menu">Karyawan</span>
         </a>
     </li>
+
+    <li class="sidebar-item">
+        <a class="sidebar-link" href="{{ url('pelanggan') }}" aria-expanded="false">
+            <span><i class="ti ti-restaurant"></i></span>
+            <span class="hide-menu">Pelanggan</span>
+        </a>
+    </li>
             
           </ul>
 

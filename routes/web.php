@@ -31,3 +31,8 @@ Route::get('/menu_makanan/destroy/{id}', [MenuMakananController::class, 'destroy
 use App\Http\Controllers\KaryawanController;
 Route::resource('karyawan', KaryawanController::class);
 Route::get('/karyawan/destroy/{id}', [KaryawanController::class, 'destroy']);
+
+//hanan
+use App\Http\Controllers\PelangganController;
+Route::resource('pelanggan', PelangganController::class);
+Route::get('/pelanggan/destroy/{id}', [PelangganController::class, 'destroy']);
