@@ -21,3 +21,8 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 use App\Http\Controllers\SupplierController;
 Route::resource('supplier', SupplierController::class);
 Route::get('/supplier/destroy/{id}', [SupplierController::class, 'destroy']);
+
+//Bos saka
+use App\Http\Controllers\MenuMakananController;
+Route::resource('menu_makanan', MenuMakananController::class);
+Route::get('/menu_makanan/destroy/{id}', [MenuMakananController::class, 'destroy']);

@@ -56,6 +56,13 @@
 
 
             <!-- Tambahkan Menu Makanan -->
+    <li class="sidebar-item">
+        <a class="sidebar-link" href="{{ url('menu_makanan') }}" aria-expanded="false">
+            <span><i class="ti ti-restaurant"></i></span>
+            <span class="hide-menu">Menu Makanan</span>
+        </a>
+    </li>
+
     
     <li class="sidebar-item">
         <a class="sidebar-link" href="{{ url('supplier') }}" aria-expanded="false">
