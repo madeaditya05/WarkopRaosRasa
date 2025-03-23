@@ -70,6 +70,13 @@
             <span class="hide-menu">Supplier</span>
         </a>
     </li>
+
+    <li class="sidebar-item">
+        <a class="sidebar-link" href="{{ url('karyawan') }}" aria-expanded="false">
+            <span><i class="ti ti-restaurant"></i></span>
+            <span class="hide-menu">Karyawan</span>
+        </a>
+    </li>
             
           </ul>
 
