@@ -42,3 +42,8 @@ Route::get('/karyawan/destroy/{id}', [KaryawanController::class, 'destroy']);
 use App\Http\Controllers\PelangganController;
 Route::resource('pelanggan', PelangganController::class);
 Route::get('/pelanggan/destroy/{id}', [PelangganController::class, 'destroy']);
+
+//Gibett
+use App\Http\Controllers\BahanBakuController;
+Route::resource('bahanbaku', BahanBakuController::class);
+Route::get('/bahanbaku/destroy/{id}', [BahanBakuController::class, 'destroy']);
