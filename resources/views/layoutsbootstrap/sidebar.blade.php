@@ -84,6 +84,20 @@
             <span class="hide-menu">Pelanggan</span>
         </a>
     </li>
+
+    <li class="sidebar-item">
+        <a class="sidebar-link" href="{{ url('bahanbaku') }}" aria-expanded="false">
+            <span><i class="ti ti-restaurant"></i></span>
+            <span class="hide-menu">Bahan Baku</span>
+        </a>
+    </li>
+
+    <li class="sidebar-item">
+        <a class="sidebar-link" href="{{ url('user') }}" aria-expanded="false">
+            <span><i class="ti ti-restaurant"></i></span>
+            <span class="hide-menu">User</span>
+        </a>
+    </li>
             
           </ul>
 

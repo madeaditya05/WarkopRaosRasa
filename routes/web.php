@@ -47,3 +47,19 @@ Route::get('/pelanggan/destroy/{id}', [PelangganController::class, 'destroy']);
 use App\Http\Controllers\BahanBakuController;
 Route::resource('bahanbaku', BahanBakuController::class);
 Route::get('/bahanbaku/destroy/{id}', [BahanBakuController::class, 'destroy']);
+
+//Gibett
+use App\Http\Controllers\UserController;
+Route::resource('user', UserController::class);
+Route::get('/user/destroy/{id}', [UserController::class, 'destroy']);
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/admin/dashboard', function () {
+        return view('admin.dashboard');
+    });
+
+    Route::get('/customer/home', function () {
+        return view('customer.home');
+    });
+});
+

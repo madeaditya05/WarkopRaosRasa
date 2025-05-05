@@ -3,20 +3,18 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
-// tambahan untuk proses authentikasi
 use Illuminate\Support\Facades\Auth;
-use App\Models\User; //untuk akses kelas model user
+use App\Models\User;
 
 class AuthController extends Controller
 {
-    // method untuk menampilkan halaman awal login
+    // Method untuk menampilkan halaman login
     public function showLoginForm()
     {
         return view('login');
     }
 
-    // proses validasi data login
+    // Proses validasi data login
     public function login(Request $request)
     {
         $credentials = $request->validate([
@@ -26,7 +24,8 @@ class AuthController extends Controller
     
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-            return redirect()->intended('/menu_makanan'); // Redirect ke halaman menu_makanan
+            // Setelah login berhasil, akan diproses oleh authenticated method
+            return $this->redirectBasedOnUserGroup($request->user());
         }
     
         return back()->withErrors([
@@ -34,7 +33,7 @@ class AuthController extends Controller
         ]);
     }
 
-    // method untuk menangani logout
+    // Method untuk menangani logout
     public function logout(Request $request)
     {
         Auth::logout();
@@ -42,5 +41,16 @@ class AuthController extends Controller
         $request->session()->regenerateToken();
         return redirect('/login');
     }
-}
 
+    // Fungsi untuk mengarahkan user setelah login
+    private function redirectBasedOnUserGroup($user)
+    {
+        if ($user->user_group === 'admin') {
+            return redirect('/admin/dashboard');
+        }
+
+        if ($user->user_group === 'customer') {
+            return redirect('/supplier');
+        }
+    }
+}

@@ -17,10 +17,12 @@ class User extends Authenticatable
      *
      * @var list<string>
      */
+    protected $table = 'users'; // Sesuaikan dengan nama tabel di database
     protected $fillable = [
         'name',
         'email',
         'password',
+        'user_group',
     ];
 
     /**
