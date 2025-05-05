@@ -1,89 +1,110 @@
 @extends('layoutbootstrap')
 
 @section('konten')
+
+    <!--  Main wrapper -->
     <div class="body-wrapper">
-        <header class="app-header">
-            <nav class="navbar navbar-expand-lg navbar-light">
-                <ul class="navbar-nav">
-                    <li class="nav-item d-block d-xl-none">
-                        <a class="nav-link sidebartoggler nav-icon-hover" id="headerCollapse" href="javascript:void(0)">
-                            <i class="ti ti-menu-2"></i>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
-        </header>
+      <!--  Header Start -->
+      <header class="app-header">
+        <nav class="navbar navbar-expand-lg navbar-light">
+          <ul class="navbar-nav">
+            <li class="nav-item d-block d-xl-none">
+              <a class="nav-link sidebartoggler nav-icon-hover" id="headerCollapse" href="javascript:void(0)">
+                <i class="ti ti-menu-2"></i>
+              </a>
+            </li>
+          </ul>
+          <div class="navbar-collapse justify-content-end px-0" id="navbarNav">
+            <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
+            <a href="#" class="btn btn-primary">-</a>
+              <li class="nav-item dropdown">
+                <a class="nav-link nav-icon-hover" href="javascript:void(0)" id="drop2" data-bs-toggle="dropdown"
+                  aria-expanded="false">
+                  <img src="{{asset('images/profile/user-1.jpg')}}" alt="" width="35" height="35" class="rounded-circle">
+                </a>
+                <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up" aria-labelledby="drop2">
+                  <div class="message-body">
+                    <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
+                      <i class="ti ti-user fs-6"></i>
+                      <p class="mb-0 fs-3">My Profile</p>
+                    </a>
+                    <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
+                      <i class="ti ti-mail fs-6"></i>
+                      <p class="mb-0 fs-3">My Account</p>
+                    </a>
+                    <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
+                      <i class="ti ti-list-check fs-6"></i>
+                      <p class="mb-0 fs-3">My Task</p>
+                    </a>
+                    <a href="{{url('logout')}}" class="btn btn-outline-primary mx-3 mt-2 d-block">Logout</a>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </header>
+      <!--  Header End -->
+      <div class="container-fluid">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title fw-semibold mb-4">User</h5>
 
-        <div class="container-fluid">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title fw-semibold mb-4">Edit Bahan Baku</h5>
+                <!-- Display Error jika ada error -->
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+                <!-- Akhir Display Error -->
 
-                    @if ($errors->any())
-                        <div class="alert alert-danger">
-                            <ul>
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endif
+                 <!-- Awal Dari Input Form -->
+                 <form action="{{ route('user.update', $user->id) }}" method="post">
+                    @csrf
+                    @method('PUT')
+                    <fieldset>
+                        <div class="mb-3"><label for="name">Nama</label>
+                        <input class="form-control form-control-solid" id="name_tampil" name="name_tampil" type="text" value="{{$user->name}}"></div>
+                    </fieldset>
+                    <input type="hidden" id="name" name="name" value="{{$user->name}}">
 
-                    <form action="{{ route('bahanbaku.update', $bahanbaku->id) }}" method="POST">
-    @csrf
-    @method('PUT')
+                    <div class="mb-3"><label for="email">Email</label>
+                    <input class="form-control form-control-solid" id="email" name="email" type="text" placeholder="Contoh: Toko Mukena Sejuk Menenangkan" value="{{$user->email}}">
+                    </div>
 
-    <div class="mb-3">
-        <label for="kode_bahan" class="form-label">Kode Bahan</label>
-        <input type="text" class="form-control" id="kode_bahan" name="kode_bahan" 
-            value="{{ old('kode_bahan', $bahanbaku->kode_bahan) }}" readonly required>
-    </div>
-
-    <div class="mb-3">
-        <label for="nama_bahan" class="form-label">Nama Bahan</label>
-        <input type="text" class="form-control" id="nama_bahan" name="nama_bahan" 
-            value="{{ old('nama_bahan', $bahanbaku->nama_bahan) }}" required>
-    </div>
-
-    <div class="mb-3">
-        <label for="jumlah" class="form-label">Jumlah</label>
-        <input type="text" class="form-control" id="jumlah" name="jumlah" 
-            value="{{ old('jumlah', $bahanbaku->jumlah) }}" required>
-    </div>
-
-    <div class="mb-3">
-    <label for="satuan" class="form-label">Satuan</label>
-    <select class="form-control" id="satuan" name="satuan" required>
-        <option value="Pcs" {{ old('satuan', $bahanbaku->satuan) == 'Pcs' ? 'selected' : '' }}>Pcs</option>
-        <option value="Lusin" {{ old('satuan', $bahanbaku->satuan) == 'Lusin' ? 'selected' : '' }}>Lusin</option>
-        <option value="Kodi" {{ old('satuan', $bahanbaku->satuan) == 'Kodi' ? 'selected' : '' }}>Kodi</option>
-        <option value="Gross" {{ old('satuan', $bahanbaku->satuan) == 'Gross' ? 'selected' : '' }}>Gross</option>
-        <option value="Rim" {{ old('satuan', $bahanbaku->satuan) == 'Rim' ? 'selected' : '' }}>Rim</option>
-        <option value="Kg" {{ old('satuan', $bahanbaku->satuan) == 'Kg' ? 'selected' : '' }}>Kg</option>
-        <option value="Dus atau paket" {{ old('satuan', $bahanbaku->satuan) == 'Dus atau paket' ? 'selected' : '' }}>Dus atau paket</option>
+                    <div class="mb-3">
+    <label for="user_group" class="form-label">User Group</label>
+    <select class="form-control form-control-solid" id="user_group" name="user_group" required>
+        <option value="">-- Pilih User Group --</option>
+        <option value="customer" {{ $user->user_group == 'Customer' ? 'selected' : '' }}>Customer</option>
+        <option value="admin" {{ $user->user_group == 'Admin' ? 'selected' : '' }}>Admin</option>
     </select>
 </div>
 
-            <div class="mb-3">
-                <label for="harga_per_satuan" class="form-label">Harga per Satuan</label>
-                <input type="number" class="form-control" id="harga_per_satuan" name="harga_per_satuan" 
-                    value="{{ old('harga_per_satuan', $bahanbaku->harga_per_satuan) }}" step="0.01" required>
-            </div>
-            <div class="mb-3">
-                        <div class="mb-3">
-                            <label for="keterangan" class="form-label">Keterangan</label>
-                            <textarea class="form-control" id="keterangan" name="keterangan" rows="3">{{ old('keterangan', $bahanbaku->keterangan) }}</textarea>
-                <br>
-                <!-- Tombol Simpan -->
-                <input class="col-sm-1 btn btn-success btn-sm" type="submit" value="Ubah">
-            
-                <a href="{{ route('bahanbaku.index') }}" >
+                    </div>
+                    <br>
+                    <div>
+                    <!-- untuk tombol simpan -->
+                    
+                    <input class="col-sm-1 btn btn-success btn-sm ms-4" type="submit" value="Ubah">
 
-                <!-- Tombol Batal -->
-                <a class="col-sm-1 btn btn-dark btn-sm" href="{{ url('/bahanbaku') }}" role="button">Batal</a>
-                    </form>
-                </div>
-            </div>
+                    <!-- untuk tombol batal simpan -->
+                    <a class="col-sm-1 btn btn-dark  btn-sm" href="{{ url('/user') }}" role="button">Batal</a>
+</div>
+                </form>
+                <!-- Akhir Dari Input Form -->
+            
+          </div>
         </div>
-    </div>
+      </div>
+		
+		
+		
+        
 @endsection
+
+

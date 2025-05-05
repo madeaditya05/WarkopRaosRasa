@@ -66,7 +66,6 @@ class UserController extends Controller
             'name' => 'required|min:3|max:255',
             'email' => 'required',
             'user_group' => 'required',
-            'password' => 'required',
         ]);
 
         $user->update($validated);
