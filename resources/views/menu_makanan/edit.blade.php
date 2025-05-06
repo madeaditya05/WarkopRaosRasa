@@ -63,7 +63,7 @@
                 <!-- Akhir Display Error -->
 
                  <!-- Awal Dari Input Form -->
-                 <form action="{{ route('menu_makanan.update', $menuMakanan->id) }}" method="post">
+                 <form action="{{ route('menu_makanan.update', $menuMakanan->id) }}" method="post" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
                     <fieldset>
@@ -71,6 +71,11 @@
                         <input class="form-control form-control-solid" id="nama_menu_tampil" name="nama_menu_tampil" type="text" placeholder="Contoh: PR-001" value="{{$menuMakanan->nama_menu}}"></div>
                     </fieldset>
                     <input type="hidden" id="nama_menu" name="nama_menu" value="{{$menuMakanan->nama_menu}}">
+
+                    <div class="mb-3">
+                        <label for="foto" class="form-label">Ganti Foto Menu</label>
+                        <input type="file" class="form-control" id="foto" name="foto" accept="image/*" value="{{$menuMakanan->foto}}">
+                    </div>
 
                     <div class="mb-3"><label for="deskripsilabel">Deskripsi</label>
                     <input class="form-control form-control-solid" id="deskripsi" name="deskripsi" type="text" placeholder="Contoh: Toko Mukena Sejuk Menenangkan" value="{{$menuMakanan->deskripsi}}">

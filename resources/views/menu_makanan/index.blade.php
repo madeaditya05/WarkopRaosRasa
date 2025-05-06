@@ -61,6 +61,7 @@
                                 <thead class="thead-dark">
                                     <tr>
                                         <th>Nama Menu</th>
+                                        <th>Foto</th>
                                         <th>Deskripsi</th>
                                         <th>Harga</th>
                                         <th>Kategori</th>
@@ -71,6 +72,13 @@
                                     @foreach ($menu_makanan as $menu)
                                     <tr>
                                         <td>{{ $menu->nama_menu }}</td>
+                                        <td>
+                                            @if ($menu->foto)
+                                                <img src="{{ asset('storage/' . $menu->foto) }}" width="100" alt="Foto Menu">
+                                            @else
+                                                <span class="text-muted">-</span>
+                                            @endif
+                                        </td>
                                         <td>{{ $menu->deskripsi }}</td>
                                         <td>Rp{{ number_format($menu->harga, 0, ',', '.') }}</td>
                                         <td>{{ $menu->kategori }}</td>

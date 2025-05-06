@@ -33,11 +33,15 @@
                 @endif
                 <!-- Akhir Error Validasi -->
 
-                <form action="{{ route('menu_makanan.store') }}" method="POST">
+                <form action="{{ route('menu_makanan.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="mb-3">
                         <label for="nama_menu" class="form-label">Nama Menu</label>
                         <input type="text" class="form-control" id="nama_menu" name="nama_menu" value="{{ old('nama_menu') }}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="foto" class="form-label">Foto Menu</label>
+                        <input type="file" class="form-control" id="foto" name="foto" accept="image/*">
                     </div>
                     <div class="mb-3">
                         <label for="deskripsi" class="form-label">Deskripsi</label>

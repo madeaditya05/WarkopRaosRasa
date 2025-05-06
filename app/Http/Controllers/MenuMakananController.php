@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateMenuMakananRequest;
 
 use App\Charts\MenuMakananChart;
 
+use Illuminate\Support\Facades\Storage;
 
 
 class MenuMakananController extends Controller
@@ -40,11 +41,18 @@ class MenuMakananController extends Controller
             'deskripsi' => 'nullable',
             'harga' => 'required|numeric',
             'kategori' => 'required',
+            'foto' => 'nullable|image|mimes:jpg,png,jpeg|max:2048',
         ]);
-    
+
+        if ($request->hasFile('foto')) {
+            $validated['foto'] = $request->file('foto')->store('menu_makanan', 'public');
+        }
+
         MenuMakanan::create($validated);
+
         return redirect()->route('menu_makanan.index')->with('success', 'Menu berhasil ditambahkan');
     }
+
     
 
     /**
@@ -73,9 +81,20 @@ class MenuMakananController extends Controller
             'deskripsi' => 'nullable',
             'harga' => 'required|numeric',
             'kategori' => 'required',
+            'foto' => 'nullable|image|mimes:jpg,png,jpeg|max:2048',
         ]);
 
+        if ($request->hasFile('foto')) {
+            // Hapus foto lama
+            if ($menuMakanan->foto) {
+                Storage::disk('public')->delete($menuMakanan->foto);
+            }
+            // Simpan foto baru
+            $validated['foto'] = $request->file('foto')->store('menu_makanan', 'public');
+        }
+
         $menuMakanan->update($validated);
+
         return redirect()->route('menu_makanan.index')->with('success', 'Menu berhasil diperbarui');
     }
 
@@ -84,9 +103,15 @@ class MenuMakananController extends Controller
      */
     public function destroy($id)
     {
-        $menu = MenuMakanan::findOrFail($id);
-    $menu->delete();
+        $menuMakanan = MenuMakanan::findOrFail($id);
 
-    return redirect()->route('menu_makanan.index')->with('success', 'Data Berhasil di Hapus');
+        if ($menuMakanan->foto) {
+            Storage::disk('public')->delete($menuMakanan->foto);
+        }
+
+        $menuMakanan->delete();
+
+        return redirect()->route('menu_makanan.index')->with('success', 'Data Berhasil di Hapus');
     }
+
 }
