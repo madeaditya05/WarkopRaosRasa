@@ -1,4 +1,4 @@
-@extends('layoutbootstrap')
+@extends('layoutsbootstrapadmin')
 
 @section('konten')
     <div class="body-wrapper">

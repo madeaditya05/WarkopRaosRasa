@@ -1,4 +1,4 @@
-@extends('layoutbootstrap')
+@extends('layoutsbootstrapadmin')
 
 @section('konten')
 
@@ -46,6 +46,10 @@
                     <div class="mb-3">
                         <label for="deskripsi" class="form-label">Deskripsi</label>
                         <textarea class="form-control" id="deskripsi" name="deskripsi">{{ old('deskripsi') }}</textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="stok" class="form-label">Stok</label>
+                        <textarea class="form-control" id="stok" name="stok">{{ old('stok') }}</textarea>
                     </div>
                     <div class="mb-3">
                         <label for="harga" class="form-label">Harga</label>

@@ -50,7 +50,7 @@ class AuthController extends Controller
         }
 
         if ($user->user_group === 'customer') {
-            return redirect('/depan');
+            return redirect('/menu');
         }
     }
 }

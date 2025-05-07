@@ -1,4 +1,4 @@
-@extends('layoutbootstrap')
+@extends('layoutsbootstrapadmin')
 
 @section('konten')
 <!--  Main wrapper -->

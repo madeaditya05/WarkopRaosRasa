@@ -27,14 +27,7 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 // === ROUTE PROTECTED (HANYA BISA DIAKSES SETELAH LOGIN) ===
 Route::middleware(['auth'])->group(function () {
     
-    // Halaman dashboard sesuai user_group
-    Route::get('/admin/dashboard', function () {
-        return view('admin.dashboard');
-    });
-
-    Route::get('/customer/home', function () {
-        return view('customer.home');
-    });
+    
 
     // Route CRUD Supplier
     Route::resource('supplier', SupplierController::class);
@@ -59,4 +52,11 @@ Route::middleware(['auth'])->group(function () {
     // Route CRUD User
     Route::resource('user', UserController::class);
     Route::get('/user/destroy/{id}', [UserController::class, 'destroy']);
+
+    // login customer
+Route::get('/depan', [App\Http\Controllers\Controller::class, 'daftarbarang']);
+
+Route::get('/menu', [MenuMakananController::class, 'customerView'])->name('menu.customer');
+
 });
+

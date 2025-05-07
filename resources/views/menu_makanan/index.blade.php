@@ -1,4 +1,4 @@
-@extends('layoutbootstrap')
+@extends('layoutsbootstrapadmin')
 
 @section('konten')
 <!-- Main wrapper -->
@@ -63,6 +63,7 @@
                                         <th>Nama Menu</th>
                                         <th>Foto</th>
                                         <th>Deskripsi</th>
+                                        <th>Stok</th>
                                         <th>Harga</th>
                                         <th>Kategori</th>
                                         <th>Aksi</th>
@@ -80,6 +81,7 @@
                                             @endif
                                         </td>
                                         <td>{{ $menu->deskripsi }}</td>
+                                        <td>{{ $menu->stok }}</td>
                                         <td>Rp{{ number_format($menu->harga, 0, ',', '.') }}</td>
                                         <td>{{ $menu->kategori }}</td>
                                         <td>

@@ -1,4 +1,4 @@
-@extends('layoutbootstrap')
+@extends('layoutsbootstrapadmin')
 
 @section('konten')
 
@@ -81,9 +81,12 @@
                     <input class="form-control form-control-solid" id="deskripsi" name="deskripsi" type="text" placeholder="Contoh: Toko Mukena Sejuk Menenangkan" value="{{$menuMakanan->deskripsi}}">
                     </div>
                     
+                    <div class="mb-3"><label for="stoklabel">Stok</label>
+                    <input class="form-control form-control-solid" id="stok" name="stok" type="number" placeholder="Contoh: Toko Mukena Sejuk Menenangkan" value="{{$menuMakanan->stok}}">
+                    </div>
         
                     <div class="mb-0"><label for="hargalabel">Harga</label>
-                        <textarea class="form-control form-control-solid" id="harga" name="harga" rows="3" placeholder="Cth: Jl Pelajar Pejuan 45">{{$menuMakanan->harga}}</textarea>
+                        <input class="form-control form-control-solid" id="harga" name="harga" rows="3" placeholder="Cth: Jl Pelajar Pejuan 45" value="{{$menuMakanan->harga}}">
                     </div>
 
                     <div class="mb-3">

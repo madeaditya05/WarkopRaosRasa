@@ -23,6 +23,13 @@ class MenuMakananController extends Controller
 
     }
 
+    // Method untuk customer
+    public function customerView()
+    {
+        $menu_makanan = MenuMakanan::all();
+        return view('menu_makanan.keranjang', compact('menu_makanan'));
+    }
+
     /**
      * Show the form for creating a new resource.
      */
@@ -39,6 +46,7 @@ class MenuMakananController extends Controller
         $validated = $request->validate([
             'nama_menu' => 'required|min:3|max:255',
             'deskripsi' => 'nullable',
+            'stok' => 'nullable',
             'harga' => 'required|numeric',
             'kategori' => 'required',
             'foto' => 'nullable|image|mimes:jpg,png,jpeg|max:2048',
@@ -79,6 +87,7 @@ class MenuMakananController extends Controller
         $validated = $request->validate([
             'nama_menu' => 'required|min:3|max:255',
             'deskripsi' => 'nullable',
+            'stok' => 'nullable',
             'harga' => 'required|numeric',
             'kategori' => 'required',
             'foto' => 'nullable|image|mimes:jpg,png,jpeg|max:2048',
