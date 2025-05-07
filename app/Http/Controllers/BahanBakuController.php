@@ -76,7 +76,7 @@ class BahanBakuController extends Controller
             'jumlah' => 'required',
             'satuan' => 'required',
             'harga_per_satuan' => 'required',
-            'keterangan' => 'required',
+            'subtotal' => 'required',
         ]);
 
         $bahanbaku->update($validated);

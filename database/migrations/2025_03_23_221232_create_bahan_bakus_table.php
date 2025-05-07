@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('jumlah', 100);
             $table->string('satuan', 20);
             $table->decimal('harga_per_satuan', 15, 2)->unsigned();
-            $table->text('keterangan')->nullable();
+            $table->decimal('subtotal', 20, 2)->virtualAs('jumlah * harga_per_satuan');
             $table->timestamps();
         });
     }

@@ -74,23 +74,21 @@
                                             <th>Jumlah</th>
                                             <th>Satuan</th>
                                             <th>Harga per Satuan</th>
-                                            <th>Keterangan</th>
+                                            <th>Subtotal</th>
                                             <th>Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                     @foreach ($bahanbaku as $bahan)
                                         <tr>
-                                            <td>{{ $bahan->kode_bahan }}</td>
+                                        <td>{{ $bahan->kode_bahan }}</td>
                                             <td>{{ $bahan->nama_bahan }}</td>
                                             <td>{{ $bahan->jumlah }}</td>
                                             <td>{{ $bahan->satuan }}</td>
                                             <td>Rp{{ number_format($bahan->harga_per_satuan, 0, ',', '.') }}</td>
-                                            <td>{{ $bahan->keterangan }}</td>
+                                            <td>Rp{{ number_format($bahan->jumlah * $bahan->harga_per_satuan, 0, ',', '.') }}</td>
                                             <td>
-                                            <a href="{{ route('bahanbaku.edit', $bahan->id) }}" class="btn btn-success btn-icon-split btn-sm">
-                                              Edit
-                                            </a>
+                                                <a href="{{ route('bahanbaku.edit', $bahan->id) }}" class="btn btn-success btn-sm">Edit</a>
                                                 <a href="#" onclick="deleteConfirm(this); return false;" data-id="{{ $bahan->id }}" class="btn btn-danger btn-icon-split btn-sm">
                                                     Hapus
                                                 </a>

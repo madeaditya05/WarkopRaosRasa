@@ -18,7 +18,8 @@ class BahanBaku extends Model
         'jumlah',
         'satuan',
         'harga_per_satuan',
-        'keterangan'
+        'subtotal',
+        // 'subtotal' => DB::raw('jumlah * harga_per_satuan'),
     ];
 
     // Fungsi untuk mendapatkan kode bahan baku baru
