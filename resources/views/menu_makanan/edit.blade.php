@@ -93,6 +93,7 @@
     <label for="kategori" class="form-label">Kategori</label>
     <select class="form-control form-control-solid" id="kategori" name="kategori" required>
         <option value="">-- Pilih Kategori --</option>
+        <option value="Paket Hemat" {{ $menuMakanan->kategori == 'Paket Hemat' ? 'selected' : '' }}>Paket Hemat</option>
         <option value="Indomie" {{ $menuMakanan->kategori == 'Indomie' ? 'selected' : '' }}>Indomie</option>
         <option value="Orak Arik" {{ $menuMakanan->kategori == 'Orak Arik' ? 'selected' : '' }}>Orak Arik</option>
         <option value="Telur" {{ $menuMakanan->kategori == 'Telur' ? 'selected' : '' }}>Telur</option>
@@ -100,8 +101,8 @@
         <option value="Omlet" {{ $menuMakanan->kategori == 'Omlet' ? 'selected' : '' }}>Omlet</option>
         <option value="Nasi/Mie" {{ $menuMakanan->kategori == 'Nasi/Mie' ? 'selected' : '' }}>Nasi/Mie</option>
         <option value="Kornet" {{ $menuMakanan->kategori == 'Kornet' ? 'selected' : '' }}>Kornet</option>
-        <option value="Minuman Panas" {{ $menuMakanan->kategori == 'Minuman Panas' ? 'selected' : '' }}>Minuman Panas</option>
-        <option value="Minuman Dingin" {{ $menuMakanan->kategori == 'Minuman Dingin' ? 'selected' : '' }}>Minuman Dingin</option>
+        <option value="Minuman Panas/Dingin" {{ $menuMakanan->kategori == 'Minuman Panas/Dingin' ? 'selected' : '' }}>Minuman Panas/Dingin</option>
+        
     </select>
 </div>
 

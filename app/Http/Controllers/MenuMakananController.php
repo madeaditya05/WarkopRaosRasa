@@ -26,9 +26,72 @@ class MenuMakananController extends Controller
     // Method untuk customer
     public function customerView()
     {
-        $menu_makanan = MenuMakanan::all();
-        return view('menu_makanan.keranjang', compact('menu_makanan'));
+        $dashboard = MenuMakanan::all();
+        return view('menu_makanan.dashboardcustomer', compact('dashboard'));
     }
+
+    public function showPahe()
+    {
+        $tampil_pahe = MenuMakanan::where('kategori', 'Paket Hemat')->get(); // atau sesuai field kategori Anda
+        return view('menu_makanan.kategori.pahe', compact('tampil_pahe'));
+    }
+
+    public function showIndomie()
+    {
+        $tampil_indomie = MenuMakanan::where('kategori', 'Indomie')->get(); // atau sesuai field kategori Anda
+        return view('menu_makanan.kategori.indomie', compact('tampil_indomie'));
+    }
+
+    public function showKornet()
+    {
+        $tampil_kornet = MenuMakanan::where('kategori', 'Kornet')->get(); // atau sesuai field kategori Anda
+        return view('menu_makanan.kategori.kornet', compact('tampil_kornet'));
+    }
+
+    public function showNasi()
+    {
+        $tampil_nasi = MenuMakanan::where('kategori', 'Nasi')->get(); // atau sesuai field kategori Anda
+        return view('menu_makanan.kategori.nasi', compact('tampil_nasi'));
+    }
+
+    public function showOmlet()
+    {
+        $tampil_omlet = MenuMakanan::where('kategori', 'Omlet')->get(); // atau sesuai field kategori Anda
+        return view('menu_makanan.kategori.omlet', compact('tampil_omlet'));
+    }
+
+    public function showOrakarik()
+    {
+        $tampil_orakarik = MenuMakanan::where('kategori', 'Orak Arik')->get(); // atau sesuai field kategori Anda
+        return view('menu_makanan.kategori.orakarik', compact('tampil_orakarik'));
+    }
+
+    public function showSarden()
+    {
+        $tampil_sarden = MenuMakanan::where('kategori', 'Sarden')->get(); // atau sesuai field kategori Anda
+        return view('menu_makanan.kategori.sarden', compact('tampil_sarden'));
+    }
+
+    public function showTelur()
+    {
+        $tampil_telur = MenuMakanan::where('kategori', 'Telur')->get(); // atau sesuai field kategori Anda
+        return view('menu_makanan.kategori.telur', compact('tampil_telur'));
+    }
+
+    public function showMinuman()
+    {
+        $tampil_minuman = MenuMakanan::where('kategori', 'Minuman Panas/Dingin')->get(); // atau sesuai field kategori Anda
+        return view('menu_makanan.kategori.minuman', compact('tampil_minuman'));
+    }
+
+    public function showSearch(Request $request)
+{
+    $query = $request->input('q');
+    $tampil_search = MenuMakanan::where('nama_menu', 'LIKE', '%' . $query . '%')->get();
+
+    return view('menu_makanan.search', compact('tampil_search'));
+}
+
 
     /**
      * Show the form for creating a new resource.

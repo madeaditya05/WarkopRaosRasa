@@ -9,6 +9,8 @@ use App\Http\Controllers\PelangganController;
 use App\Http\Controllers\BahanBakuController;
 use App\Http\Controllers\UserController;
 
+use App\Http\Controllers\KeranjangController;
+
 // Halaman awal
 Route::get('/', function () {
     return view('login'); // bisa ganti jadi redirect()->route('login');
@@ -56,7 +58,34 @@ Route::middleware(['auth'])->group(function () {
     // login customer
 Route::get('/depan', [App\Http\Controllers\Controller::class, 'daftarbarang']);
 
-Route::get('/menu', [MenuMakananController::class, 'customerView'])->name('menu.customer');
+Route::get('/dashboard', [MenuMakananController::class, 'customerView'])->name('dashboard');
+
+
+Route::get('/pahe', [MenuMakananController::class, 'showPahe'])->name('showPahe');
+Route::get('/indomie', [MenuMakananController::class, 'showIndomie'])->name('showIndomie');
+Route::get('/kornet', [MenuMakananController::class, 'showKornet'])->name('showKornet');
+Route::get('/nasi', [MenuMakananController::class, 'showNasi'])->name('showNasi');
+Route::get('/omlet', [MenuMakananController::class, 'showOmlet'])->name('showOmlet');
+Route::get('/orakarik', [MenuMakananController::class, 'showOrakarik'])->name('showOrakarik');
+Route::get('/sarden', [MenuMakananController::class, 'showSarden'])->name('showSarden');
+Route::get('/telur', [MenuMakananController::class, 'showTelur'])->name('showTelur');
+Route::get('/minuman', [MenuMakananController::class, 'showMinuman'])->name('showMinuman');
+
+Route::get('/search', [MenuMakananController::class, 'showSearch'])->name('showSearch');
+
+Route::get('/keranjang/checkout', [KeranjangController::class, 'checkout'])->name('keranjang.checkout');
+
+Route::post('/midtrans/callback', [MidtransController::class, 'callback']);
+
+Route::get('/keranjang', [KeranjangController::class, 'index'])->name('keranjang.index');
+Route::post('/keranjang', [KeranjangController::class, 'store'])->name('keranjang.store');
+Route::delete('/keranjang/{id}', [KeranjangController::class, 'destroy'])->name('keranjang.destroy');
+Route::get('/keranjang/checkout', [KeranjangController::class, 'checkout'])->name('keranjang.checkout');
+
+
+Route::put('/keranjang/update/{id}', [KeranjangController::class, 'update'])->name('keranjang.update');
+Route::delete('/keranjang/hapus/{id}', [KeranjangController::class, 'destroy'])->name('keranjang.destroy');
 
 });
+
 

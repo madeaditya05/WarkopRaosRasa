@@ -59,6 +59,7 @@
     <label for="kategori" class="form-label">Kategori</label>
     <select class="form-control" id="kategori" name="kategori" required style="width: 200px;">
         <option value="">-- Pilih Kategori --</option>
+        <option value="Paket Hemat">Paket Hemat</option>
         <option value="Indomie">Indomie</option>
         <option value="Orak Arik">Orak Arik</option>
         <option value="Telur">Telur</option>
@@ -66,8 +67,7 @@
         <option value="Omlet">Omlet</option>
         <option value="Nasi/Mie">Nasi/Mie</option>
         <option value="Kornet">Kornet</option>
-        <option value="Minuman Panas">Minuman Panas</option>
-        <option value="Minuman Dingin">Minuman Dingin</option>
+        <option value="Minuman Panas/Dingin">Minuman Panas</option>
     </select>
 </div>
                     </div>
