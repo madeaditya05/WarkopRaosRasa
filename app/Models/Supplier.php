@@ -7,12 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class Supplier extends Model
 {
-    /** @use HasFactory<\Database\Factories\SupplierFactory> */
     use HasFactory;
 
-    protected $table = 'supplier'; // Sesuaikan dengan nama tabel di database
+    // Wajib override, karena Laravel default-nya 'suppliers'
+    protected $table = 'supplier';
 
     protected $fillable = ['nama_supplier', 'kontak', 'alamat'];
 
-    
+    public function transaksiPembelian()
+    {
+        return $this->hasMany(TransaksiPembelianBahanBaku::class, 'supplier_id');
+    }
 }
