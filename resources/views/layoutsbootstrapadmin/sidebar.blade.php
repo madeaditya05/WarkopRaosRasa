@@ -43,16 +43,7 @@
               <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
               <span class="hide-menu">Masterdata</span>
             </li>
-            {{-- 
-<li class="sidebar-item">
-    <a class="sidebar-link" href="{{ url('perusahaan') }}" aria-expanded="false">
-        <span>
-            <i class="ti ti-layout"></i>
-        </span>
-        <span class="hide-menu">Perusahaan</span>
-    </a>
-</li>
---}}
+            
 
 
             <!-- Tambahkan Menu Makanan -->
@@ -98,6 +89,7 @@
             <span class="hide-menu">User</span>
         </a>
     </li>
+
                 <li class="nav-small-cap">
               <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
               <span class="hide-menu">Transaksi</span>
@@ -119,6 +111,17 @@
        
   
 
+
+    <li class="nav-small-cap">
+              <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+              <span class="hide-menu">Pembayaran</span>
+            </li>
+            <li class="sidebar-item">
+        <a class="sidebar-link" href="{{ url('gaji') }}" aria-expanded="false">
+            <span><i class="ti ti-restaurant"></i></span>
+            <span class="hide-menu">Pembayaran Gaji</span>
+        </a>
+    </li>
           </ul>
 
         
