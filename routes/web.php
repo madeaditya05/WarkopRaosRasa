@@ -17,7 +17,7 @@ use App\Http\Controllers\PenjualanController;
 use App\Http\Controllers\TransaksiOfflineController;
 
 use App\Http\Controllers\KeranjangController;
-
+use App\Http\Controllers\GajiController;
 // Halaman awal
 Route::get('/', function () {
     return view('login'); // bisa ganti jadi redirect()->route('login');
@@ -98,6 +98,15 @@ Route::resource('penjualan', PenjualanController::class);
 Route::resource('TransaksiOffline', TransaksiOfflineController::class);
 Route::get('transaksi-offline/export/pdf', [TransaksiOfflineController::class, 'exportPdf'])
       ->name('TransaksiOffline.exportPdf');
+
+// Route gaji Hanan
+Route::middleware(['auth'])->group(function () {
+    Route::get('/gaji', [GajiController::class, 'index'])->name('gaji.index');
+    Route::get('/gaji/create', [GajiController::class, 'create'])->name('gaji.create');
+    Route::post('/gaji', [GajiController::class, 'store'])->name('gaji.store');
+    Route::get('/gaji/export/pdf', [GajiController::class, 'exportPDF'])->name('gaji.export.pdf');
+
+});
 
 });
 
