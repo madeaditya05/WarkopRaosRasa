@@ -8,6 +8,10 @@ use App\Http\Controllers\KaryawanController;
 use App\Http\Controllers\PelangganController;
 use App\Http\Controllers\BahanBakuController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\TransaksiPembelianBahanBakuController;
+use App\Http\Controllers\DetailTransaksiPembelianBahanBakuController;
+use App\Http\Controllers\PembelianBahanBakuController;
+use App\Http\Controllers\MidtransController;
 
 use App\Http\Controllers\KeranjangController;
 
@@ -87,5 +91,29 @@ Route::put('/keranjang/update/{id}', [KeranjangController::class, 'update'])->na
 Route::delete('/keranjang/hapus/{id}', [KeranjangController::class, 'destroy'])->name('keranjang.destroy');
 
 });
+
+//GIBETTTT
+// Pembelian bahan baku
+Route::get('/transaksi', [TransaksiPembelianBahanBakuController::class, 'index'])->name('transaksi.index');
+Route::post('/transaksi/{id}/bayar', [TransaksiPembelianBahanBakuController::class, 'bayar'])->name('transaksi.bayar');
+
+Route::get('/pembelian/create', [PembelianBahanBakuController::class, 'create'])->name('pembelian.create');
+Route::post('/pembelian/store', [PembelianBahanBakuController::class, 'store'])->name('pembelian.store');
+
+Route::get('/transaksi/{id}/detail', [DetailTransaksiPembelianBahanBakuController::class, 'show'])->name('transaksi.detail');
+// Transaksinya
+Route::get('/transaksi/{id}/edit', [TransaksiPembelianBahanBakuController::class, 'edit'])->name('transaksi.edit');
+Route::put('/transaksi/{id}', [TransaksiPembelianBahanBakuController::class, 'update'])->name('transaksi.update');
+Route::delete('/transaksi/{id}', [TransaksiPembelianBahanBakuController::class, 'destroy'])->name('transaksi.destroy');
+//bahan baku
+Route::get('/bahan-baku/{id}', function($id) {
+    return App\Models\BahanBaku::find($id);
+});
+//print
+Route::get('/pembelian/{id}/export/pdf', [PembelianBahanBakuController::class, 'exportPDF'])->name('pembelian.export.pdf');
+Route::get('/pembelian/{id}/export/excel', [PembelianBahanBakuController::class, 'exportExcel'])->name('pembelian.export.excel');
+//pdf bahan baku
+Route::get('/transaksi/export', [PembelianBahanBakuController::class, 'exportIndexPDF'])->name('transaksi.export.pdf');
+
 
 

@@ -11,16 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('bahan_baku', function (Blueprint $table) {
-            $table->id();
-            $table->string('kode_bahan', 10)->unique();
-            $table->string('nama_bahan', 100);
-            $table->string('jumlah', 100);
-            $table->string('satuan', 20);
-            $table->decimal('harga_per_satuan', 15, 2)->unsigned();
-            $table->decimal('subtotal', 20, 2)->virtualAs('jumlah * harga_per_satuan');
-            $table->timestamps();
-        });
+    Schema::create('bahan_baku', function (Blueprint $table) {
+        $table->id();
+        $table->string('kode_bahan', 10)->unique();
+        $table->string('nama_bahan', 100);
+        $table->decimal('jumlah', 10, 2)->unsigned(); // FIXED
+        $table->string('satuan', 20);
+        $table->decimal('harga_per_satuan', 15, 2)->unsigned();
+        $table->decimal('subtotal', 20, 2)->virtualAs('jumlah * harga_per_satuan'); // VIRTUAL
+        $table->timestamps();
+    });
+
     }
 
     /**

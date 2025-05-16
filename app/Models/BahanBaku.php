@@ -18,7 +18,6 @@ class BahanBaku extends Model
         'jumlah',
         'satuan',
         'harga_per_satuan',
-        'subtotal',
         // 'subtotal' => DB::raw('jumlah * harga_per_satuan'),
     ];
 

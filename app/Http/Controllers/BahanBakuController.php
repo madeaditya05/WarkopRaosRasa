@@ -39,10 +39,9 @@ class BahanBakuController extends Controller
         $validated = $request->validate([
             'kode_bahan' => 'required',
             'nama_bahan' => 'required|max:100',
-            'jumlah'=> 'required|max:100',
+            'jumlah' => 'required|integer|min:0',
             'satuan' => 'required|max:20',
             'harga_per_satuan' => 'required|numeric',
-            'keterangan' => 'nullable|string',
         ]);
 
         BahanBaku::create($validated);
@@ -76,7 +75,6 @@ class BahanBakuController extends Controller
             'jumlah' => 'required',
             'satuan' => 'required',
             'harga_per_satuan' => 'required',
-            'subtotal' => 'required',
         ]);
 
         $bahanbaku->update($validated);
