@@ -38,9 +38,8 @@ class Pembeli extends Model
         // pastikan 'user_id' adalah nama kolom foreign key
     }
 
-    // relasi ke tabel penjualan
-    public function penjualan()
+    public function transaksiOfflines()
     {
-        return $this->hasMany(Penjualan::class, 'pembeli_id');
+        return $this->hasMany(TransaksiOffline::class); // Relasi ke transaksi offline
     }
 }

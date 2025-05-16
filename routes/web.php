@@ -13,6 +13,9 @@ use App\Http\Controllers\DetailTransaksiPembelianBahanBakuController;
 use App\Http\Controllers\PembelianBahanBakuController;
 use App\Http\Controllers\MidtransController;
 
+use App\Http\Controllers\PenjualanController;
+use App\Http\Controllers\TransaksiOfflineController;
+
 use App\Http\Controllers\KeranjangController;
 
 // Halaman awal
@@ -89,6 +92,12 @@ Route::get('/keranjang/checkout', [KeranjangController::class, 'checkout'])->nam
 
 Route::put('/keranjang/update/{id}', [KeranjangController::class, 'update'])->name('keranjang.update');
 Route::delete('/keranjang/hapus/{id}', [KeranjangController::class, 'destroy'])->name('keranjang.destroy');
+
+    //arannnnntzy
+Route::resource('penjualan', PenjualanController::class);
+Route::resource('TransaksiOffline', TransaksiOfflineController::class);
+Route::get('transaksi-offline/export/pdf', [TransaksiOfflineController::class, 'exportPdf'])
+      ->name('TransaksiOffline.exportPdf');
 
 });
 
