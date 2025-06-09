@@ -15,6 +15,8 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use App\Mail\TransaksiOfflineSuccessMail;
 use Illuminate\Support\Facades\Mail;
 
+
+
 class TransaksiOfflineController extends Controller
 {
     public function index()
@@ -23,6 +25,8 @@ class TransaksiOfflineController extends Controller
         return view('TransaksiOffline.index', compact('transaksi'));
     }
 
+    
+    
     public function exportPdf()
     {
         $transaksi = TransaksiOffline::with('pelanggan', 'details.menuMakanan')->latest()->get();
@@ -37,7 +41,7 @@ class TransaksiOfflineController extends Controller
     {
         $pelanggan = Pelanggan::all();
         $menu_makanan = MenuMakanan::where('stok', '>', 0)->get();
-        $no_faktur = 'TRX-' . strtoupper(Str::random(6));
+        $no_faktur = 'PJ-' . strtoupper(Str::random(6));
         $tanggal = Carbon::now();
 
         return view('TransaksiOffline.create', compact('pelanggan', 'menu_makanan', 'no_faktur', 'tanggal'));
