@@ -16,6 +16,7 @@ use App\Http\Controllers\DashboardController;
 
 use App\Http\Controllers\PenjualanController;
 use App\Http\Controllers\TransaksiOfflineController;
+use App\Http\Controllers\BukuBesarController;
 
 use App\Http\Controllers\KeranjangController;
 use App\Http\Controllers\GajiController;
@@ -159,4 +160,10 @@ Route::get('/status-transaksi/{order_id}', [App\Http\Controllers\KeranjangContro
 Route::get('/autorefresh/{order_id}', [KeranjangController::class, 'status'])->name('checkout.status');
 
 Route::post('/midtrans/callback', [MidtransController::class, 'callback']);
+
+
+// Buku Besar
+Route::get('/buku-besar', [BukuBesarController::class, 'index'])->name('buku-besar');
+Route::get('/buku-besar/export', [BukuBesarController::class, 'export'])->name('buku-besar.export');
+
 
