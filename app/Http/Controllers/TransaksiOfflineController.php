@@ -15,7 +15,6 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use App\Mail\TransaksiOfflineSuccessMail;
 use Illuminate\Support\Facades\Mail;
 
-
 class TransaksiOfflineController extends Controller
 {
     /**
@@ -57,84 +56,73 @@ class TransaksiOfflineController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-{
-    $request->validate([
-        'no_faktur'       => 'required|unique:transaksi_offline',
-        'tanggal_pesan'   => 'required|date',
-        'pelanggan_id'    => 'required|exists:pelanggan,id',
-        'menu_makanan_id' => 'required|array',
-        'menu_makanan_id.*' => 'exists:menu_makanan,id',
-        'jumlah'          => 'required|array',
-        'jumlah.*'        => 'integer|min:1',
-    ]);
-
-    if (count($request->menu_makanan_id) !== count($request->jumlah)) {
-        return back()->withErrors('Jumlah item dan jumlah pesanan tidak cocok.');
-    }
-
-    DB::beginTransaction();
-
-    try {
-        $total = 0;
-        foreach ($request->menu_makanan_id as $index => $menuId) {
-            $menu     = MenuMakanan::findOrFail($menuId);
-            $jumlah   = $request->jumlah[$index];
-            $subtotal = $menu->harga * $jumlah;
-            $total   += $subtotal;
-        }
-
-        $transaksi = TransaksiOffline::create([
-            'no_faktur'     => $request->no_faktur,
-            'tanggal_pesan' => $request->tanggal_pesan,
-            'pelanggan_id'  => $request->pelanggan_id,
-            'total_harga'   => $total,
+    {
+        $request->validate([
+            'no_faktur'         => 'required|unique:transaksi_offline',
+            'tanggal_pesan'     => 'required|date',
+            'pelanggan_id'      => 'required|exists:pelanggan,id',
+            'menu_makanan_id'   => 'required|array',
+            'menu_makanan_id.*' => 'exists:menu_makanan,id',
+            'jumlah'            => 'required|array',
+            'jumlah.*'          => 'integer|min:1',
         ]);
 
-        foreach ($request->menu_makanan_id as $index => $menuId) {
-            $menu     = MenuMakanan::findOrFail($menuId);
-            $jumlah   = $request->jumlah[$index];
-            $subtotal = $menu->harga * $jumlah;
-
-            TransaksiOfflineDetail::create([
-                'transaksi_offline_id' => $transaksi->id,
-                'menu_makanan_id'      => $menuId,
-                'jumlah'               => $jumlah,
-                'subtotal'             => $subtotal,
-            ]);
-
-            $menu->decrement('stok', $jumlah);
-            $menu->increment('terjual', $jumlah);
+        if (count($request->menu_makanan_id) !== count($request->jumlah)) {
+            return back()->withErrors('Jumlah item dan jumlah pesanan tidak cocok.');
         }
 
-        DB::commit();
+        DB::beginTransaction();
 
         try {
-            if (!empty($transaksi->pelanggan->email)) {
-                Mail::to($transaksi->pelanggan->email)
-                    ->send(new TransaksiOfflineSuccessMail($transaksi));
+            $total = 0;
+            foreach ($request->menu_makanan_id as $index => $menuId) {
+                $menu    = MenuMakanan::findOrFail($menuId);
+                $jumlah  = $request->jumlah[$index];
+                $subtotal = $menu->harga * $jumlah;
+                $total   += $subtotal;
             }
+
+            $transaksi = TransaksiOffline::create([
+                'no_faktur'     => $request->no_faktur,
+                'tanggal_pesan' => $request->tanggal_pesan,
+                'pelanggan_id'  => $request->pelanggan_id,
+                'total_harga'   => $total,
+            ]);
+
+            foreach ($request->menu_makanan_id as $index => $menuId) {
+                $menu    = MenuMakanan::findOrFail($menuId);
+                $jumlah  = $request->jumlah[$index];
+                $subtotal = $menu->harga * $jumlah;
+
+                TransaksiOfflineDetail::create([
+                    'transaksi_offline_id' => $transaksi->id,
+                    'menu_makanan_id'      => $menuId,
+                    'jumlah'               => $jumlah,
+                    'subtotal'             => $subtotal,
+                ]);
+
+                $menu->decrement('stok', $jumlah);
+                $menu->increment('terjual', $jumlah);
+            }
+
+            DB::commit();
+
+            // Kirim email kalau ada alamat email pelanggan
+            try {
+                if (!empty($transaksi->pelanggan?->email)) {
+                    Mail::to($transaksi->pelanggan->email)
+                        ->send(new TransaksiOfflineSuccessMail($transaksi));
+                }
+            } catch (\Throwable $e) {
+                logger()->error('Gagal kirim email: ' . $e->getMessage());
+            }
+
+            return redirect()->route('TransaksiOffline.index')
+                             ->with('success', 'Transaksi berhasil disimpan & email (jika ada) telah dikirim');
         } catch (\Throwable $e) {
-            logger()->error('Gagal kirim email: ' . $e->getMessage());
+            DB::rollBack();
+            return back()->withErrors('Gagal menyimpan transaksi: ' . $e->getMessage());
         }
-
-        return redirect()
-               ->route('TransaksiOffline.index')
-               ->with('success', 'Transaksi berhasil disimpan & email (jika ada) telah dikirim');
-    } catch (\Throwable $e) {
-        DB::rollBack();
-        return back()->withErrors('Gagal menyimpan transaksi: ' . $e->getMessage());
-    }
-}
-
-
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        $transaksi_offline = TransaksiOffline::with('pelanggan', 'details.menuMakanan')->findOrFail($id);
-        return view('transaksi_offline.show', compact('transaksi_offline'));
     }
 
     /**
@@ -142,7 +130,10 @@ class TransaksiOfflineController extends Controller
      */
     public function edit(string $id)
     {
+        $transaksi = TransaksiOffline::with('details.menuMakanan')->findOrFail($id);
+
         $transaksi = TransaksiOffline::with('details')->findOrFail($id);
+
         $pelanggan = Pelanggan::all();
         $menu_makanan = MenuMakanan::where('stok', '>', 0)->get();
 
@@ -155,6 +146,21 @@ class TransaksiOfflineController extends Controller
     public function update(Request $request, string $id)
     {
         $request->validate([
+            'tanggal_pesan' => 'required|date',
+            'pelanggan_id'  => 'required|exists:pelanggan,id',
+        ]);
+
+        DB::beginTransaction();
+        try {
+            $transaksi = TransaksiOffline::findOrFail($id);
+            $transaksi->update([
+                'tanggal_pesan' => $request->tanggal_pesan,
+                'pelanggan_id'  => $request->pelanggan_id,
+            ]);
+            DB::commit();
+
+            return redirect()->route('TransaksiOffline.index')
+                             ->with('success', 'Transaksi berhasil diperbarui');
             'tanggal_pesan'   => 'required|date',
             'pelanggan_id'    => 'required|exists:pelanggan,id',
             'menu_makanan_id' => 'required|array',
@@ -211,20 +217,32 @@ class TransaksiOfflineController extends Controller
 
             return redirect()->route('TransaksiOffline.index')
                             ->with('success', 'Transaksi berhasil diperbarui.');
+
         } catch (\Throwable $e) {
             DB::rollBack();
             return back()->withErrors('Gagal memperbarui transaksi: ' . $e->getMessage());
         }
+
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(string $id)
+    {
+        $transaksi_offline = TransaksiOffline::with('pelanggan', 'details.menuMakanan')->findOrFail($id);
+        return view('transaksi_offline.show', compact('transaksi_offline'));
+
     }
 
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
         $trx = TransaksiOffline::findOrFail($id);
         $trx->delete();
-        return redirect()->route('transaksi_offline.index')->with('success', 'Transaksi berhasil dihapus');
+        return redirect()->route('TransaksiOffline.index')->with('success', 'Transaksi berhasil dihapus');
     }
 }

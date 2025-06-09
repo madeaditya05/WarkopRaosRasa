@@ -101,12 +101,19 @@ Route::resource('TransaksiOffline', TransaksiOfflineController::class);
 Route::get('transaksi-offline/export/pdf', [TransaksiOfflineController::class, 'exportPdf'])
       ->name('TransaksiOffline.exportPdf');
 
+      Route::resource('TransaksiOffline', TransaksiOfflineController::class);
+     Route::get('/TransaksiOffline/{id}', [TransaksiOfflineController::class, 'destroy'])->name('TransaksiOffline.destroy');
+
+
+
+
 // Route gaji Hanan
 Route::middleware(['auth'])->group(function () {
     Route::get('/gaji', [GajiController::class, 'index'])->name('gaji.index');
     Route::get('/gaji/create', [GajiController::class, 'create'])->name('gaji.create');
     Route::post('/gaji', [GajiController::class, 'store'])->name('gaji.store');
     Route::get('/gaji/export/pdf', [GajiController::class, 'exportPDF'])->name('gaji.export.pdf');
+
 
 });
 
