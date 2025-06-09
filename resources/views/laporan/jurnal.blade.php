@@ -2,66 +2,87 @@
 
 @section('konten')
 <style>
-    /* Typography dan layout untuk kesan formal */
     body, .body-wrapper {
-        font-family: 'Times New Roman', serif;
-        background-color: #f8f9fa;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f5f6fa;
         color: #222;
     }
     .report-container {
-        max-width: 900px;
+        max-width: 1000px;
         margin: 40px auto;
         background: white;
-        padding: 40px 50px;
-        box-shadow: 0 8px 24px rgba(0,0,0,0.12);
-        border-radius: 8px;
-        border: 1px solid #ccc;
+        padding: 40px;
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+        border-radius: 12px;
+        border: 1px solid #ddd;
     }
     .report-header {
         text-align: center;
-        margin-bottom: 40px;
-        border-bottom: 2px solid #003366;
+        margin-bottom: 30px;
+        border-bottom: 2px solid #944222;
         padding-bottom: 15px;
     }
     .report-header img.logo {
-        height: 60px;
-        margin-bottom: 15px;
+        height: 70px;
+        margin-bottom: 10px;
     }
     .report-header h1 {
-        font-size: 28px;
-        font-weight: 700;
-        color: #003366;
-        letter-spacing: 1.5px;
-        margin-bottom: 6px;
+        font-size: 26px;
+        font-weight: bold;
+        color: #944222;
+        letter-spacing: 1px;
+        margin-bottom: 4px;
     }
     .report-header h4 {
-        font-weight: 400;
+        font-size: 16px;
         font-style: italic;
         color: #555;
-        margin-top: 0;
     }
+
+    form.filter-form {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 30px;
+    }
+    form select, form button, form a {
+        padding: 8px 12px;
+        font-size: 14px;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+    }
+    form button {
+        background-color: #0d6efd;
+        color: white;
+        border: none;
+    }
+    form a {
+        background-color: #fc5c65;
+        color: white;
+        text-decoration: none;
+    }
+
     table {
         width: 100%;
         border-collapse: collapse;
-        font-size: 16px;
-        margin-bottom: 50px;
+        font-size: 15px;
+        margin-bottom: 40px;
     }
     th, td {
-        border: 1px solid #777;
-        padding: 10px 15px;
+        border: 1px solid #ccc;
+        padding: 10px 14px;
         text-align: center;
+        vertical-align: middle;
     }
     th {
-        background-color: #003366;
+        background-color: #944222;
         color: white;
         font-weight: 600;
-        letter-spacing: 0.05em;
     }
     tbody tr:nth-child(even) {
-        background-color: #f1f5fb;
-    }
-    tbody tr:hover {
-        background-color: #dde6f4;
+        background-color: #f9f9f9;
     }
     td.text-left {
         text-align: left;
@@ -70,72 +91,114 @@
         text-align: right;
         font-family: 'Courier New', monospace;
     }
+    td.keterangan-cell {
+        text-align: left;
+        max-width: 280px;
+        word-wrap: break-word;
+        white-space: normal;
+        padding-left: 14px;
+    }
+    td.keterangan-cell.credit-keterangan {
+        padding-left: 50px;
+    }
+
+    /* Perbaikan khusus untuk kolom tanggal supaya tidak wrap dan lebarnya cukup */
+    th.tanggal-col {
+        width: 160px;
+        white-space: nowrap;
+    }
+    td.tanggal-cell {
+        white-space: nowrap;
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+
     .footer-section {
-        display: flex;
-        justify-content: space-between;
-        margin-top: 60px;
-        font-size: 14px;
-        color: #444;
-    }
-    .footer-section .signature {
-        width: 180px;
-        border-top: 1px solid #444;
-        text-align: center;
-        padding-top: 8px;
-        font-weight: 600;
-        letter-spacing: 0.08em;
-        color: #003366;
-    }
-    .footer-section .date {
-        font-style: italic;
+        text-align: right;
+        font-size: 13px;
         color: #666;
+        border-top: 1px dashed #ccc;
+        padding-top: 15px;
     }
 </style>
 
 <div class="body-wrapper">
     <div class="report-container">
         <div class="report-header">
-            <img src="{{ asset('images/logos/warkop.png') }}" alt="Logo Pemerintah" class="logo" />
-            <h1>Laporan Jurnal Penjualan Offline</h1>
-            <h4>Periode: {{ \Carbon\Carbon::parse($transaksis->first()?->tanggal_pesan)->format('d M Y') ?? '-' }}
-                &nbsp;–&nbsp;
-                {{ \Carbon\Carbon::parse($transaksis->last()?->tanggal_pesan)->format('d M Y') ?? '-' }}
+            <img src="{{ asset('images/logos/warkop.png') }}" alt="Logo Warkop" class="logo" />
+            <h1>Laporan Jurnal Umum</h1>
+            <h4>
+                Periode:
+                @if(request('bulan') && request('tahun'))
+                    {{ \Carbon\Carbon::createFromDate(request('tahun'), request('bulan'), 1)->translatedFormat('F Y') }}
+                @else
+                    Semua Periode
+                @endif
             </h4>
         </div>
+
+        <!-- Filter Form -->
+        <form method="GET" action="{{ route('laporan.jurnal') }}" class="filter-form">
+            <select name="bulan">
+                <option value="">-- Bulan --</option>
+                @for ($i = 1; $i <= 12; $i++)
+                    <option value="{{ $i }}" {{ request('bulan') == $i ? 'selected' : '' }}>
+                        {{ \Carbon\Carbon::create()->month($i)->translatedFormat('F') }}
+                    </option>
+                @endfor
+            </select>
+
+            <select name="tahun">
+                <option value="">-- Tahun --</option>
+                @for ($y = now()->year; $y >= 2020; $y--)
+                    <option value="{{ $y }}" {{ request('tahun') == $y ? 'selected' : '' }}>{{ $y }}</option>
+                @endfor
+            </select>
+
+            <select name="tipe">
+                <option value="semua" {{ request('tipe') == 'semua' ? 'selected' : '' }}>Semua</option>
+                <option value="penjualan" {{ request('tipe') == 'penjualan' ? 'selected' : '' }}>Penjualan</option>
+                <option value="penggajian" {{ request('tipe') == 'penggajian' ? 'selected' : '' }}>Penggajian</option>
+                <option value="pembelian" {{ request('tipe') == 'pembelian' ? 'selected' : '' }}>Pembelian</option>
+            </select>
+
+            <button type="submit">Tampilkan</button>
+
+            <a href="{{ route('laporan.jurnal.pdf', ['bulan' => request('bulan'), 'tahun' => request('tahun'), 'tipe' => request('tipe', 'semua')]) }}"
+               target="_blank">
+                Cetak PDF
+            </a>
+        </form>
 
         <table>
             <thead>
                 <tr>
-                    <th style="width:110px;">Tanggal</th>
+                    <th class="tanggal-col">Tanggal</th>
                     <th style="width:140px;">No. Faktur</th>
-                    <th>Keterangan</th>
+                    <th style="width:300px;">Keterangan</th>
                     <th style="width:90px;">Ref</th>
                     <th style="width:140px;">Debit (Rp)</th>
                     <th style="width:140px;">Kredit (Rp)</th>
                 </tr>
             </thead>
             <tbody>
-                @forelse ($transaksis as $trx)
+                @forelse ($data as $row)
                     <tr>
-                        <td>{{ \Carbon\Carbon::parse($trx->tanggal_pesan)->format('d M Y') }}</td>
-                        <td>{{ $trx->no_faktur }}</td>
-                        <td class="text-left">Kas</td>
-                        <td>101</td>
-                        <td class="text-right">{{ number_format($trx->total_harga, 0, ',', '.') }}</td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td class="text-left">Penjualan</td>
-                        <td>401</td>
-                        <td></td>
-                        <td class="text-right">{{ number_format($trx->total_harga, 0, ',', '.') }}</td>
+                        <td class="tanggal-cell">{{ \Carbon\Carbon::parse($row['tanggal'])->translatedFormat('d M Y') }}</td>
+<td>{{ $row['no_faktur'] }}</td>
+<td class="keterangan-cell {{ $row['kredit'] > 0 ? 'credit-keterangan' : '' }}">{{ $row['keterangan'] }}</td>
+<td>{{ $row['ref'] }}</td>
+<td class="text-right">
+    {{ $row['debit'] > 0 ? number_format($row['debit'], 0, ',', '.') : '' }}
+</td>
+<td class="text-right" style="padding-right: 18px;">
+    {{ $row['kredit'] > 0 ? number_format($row['kredit'], 0, ',', '.') : '' }}
+</td>
                     </tr>
                 @empty
                     <tr>
                         <td colspan="6" class="text-center" style="font-style: italic; color: #888;">
-                            Tidak ada data transaksi untuk periode ini.
+                            Tidak ada data jurnal untuk periode ini.
                         </td>
                     </tr>
                 @endforelse
@@ -143,10 +206,7 @@
         </table>
 
         <div class="footer-section">
-            <div class="date">
-                Dicetak pada: {{ \Carbon\Carbon::now()->format('d M Y, H:i') }}
-            </div>
-            
+            Dicetak pada: {{ \Carbon\Carbon::now()->translatedFormat('d M Y, H:i') }}
         </div>
     </div>
 </div>
