@@ -146,6 +146,9 @@ Route::get('/pembelian/{id}/export/excel', [PembelianBahanBakuController::class,
 //pdf bahan baku
 Route::get('/transaksi/export', [PembelianBahanBakuController::class, 'exportIndexPDF'])->name('transaksi.export.pdf');
 
+// laporan
+
+Route::get('/laporan-jurnal', [App\Http\Controllers\LaporanJurnalController::class, 'index'])->name('laporan.jurnal');
 
 
 });
@@ -156,3 +159,4 @@ Route::get('/status-transaksi/{order_id}', [App\Http\Controllers\KeranjangContro
 Route::get('/autorefresh/{order_id}', [KeranjangController::class, 'status'])->name('checkout.status');
 
 Route::post('/midtrans/callback', [MidtransController::class, 'callback']);
+
