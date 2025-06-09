@@ -20,11 +20,8 @@ class Gaji extends Model
         'status'
     ];
 
-    /**
-     * Relasi ke model Karyawan
-     */
     public function karyawan()
     {
         return $this->belongsTo(Karyawan::class, 'karyawan_id');
-    }
-}
+    }                                                                                                                                                                     
+} 

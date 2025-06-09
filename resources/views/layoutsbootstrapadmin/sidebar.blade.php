@@ -134,6 +134,13 @@
             <span class="hide-menu">Laporan Jurnal</span>
         </a>
     </li>
+
+           <li class="sidebar-item">
+        <a class="sidebar-link" href="{{ url('buku-besar') }}" aria-expanded="false">
+            <span><i class="ti ti-restaurant"></i></span>
+            <span class="hide-menu">Buku Besar</span>
+        </a>
+    </li>
           </ul>
 
 
