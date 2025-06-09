@@ -46,7 +46,7 @@ class AuthController extends Controller
     private function redirectBasedOnUserGroup($user)
     {
         if ($user->user_group === 'admin') {
-            return redirect('/menu_makanan');
+            return redirect('/dashboard_admin');
         }
 
         if ($user->user_group === 'customer') {

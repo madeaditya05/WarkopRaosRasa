@@ -1,21 +1,19 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta http-equiv="refresh" content="2"> {{-- Refresh tiap 2 detik --}}
-    <title>Status Pembayaran</title>
+    <meta http-equiv="refresh" content="5"> {{-- Auto refresh tiap 5 detik --}}
+    <meta charset="UTF-8">
+    <title>Menunggu Pembayaran</title>
 </head>
 <body>
-    <h2>Status Pembayaran</h2>
-    <p>Order ID: {{ $transaksi->order_id }}</p>
-    <p>Status Pembayaran: <strong>{{ strtoupper($transaksi->status) }}</strong></p>
-    <p>Waktu sekarang: {{ \Carbon\Carbon::now('Asia/Jakarta') }}</p>
+    <h2>Menunggu pembayaran...</h2>
 
-    @if ($transaksi->status === 'success')
-        <p style="color: green;">Pembayaran berhasil!</p>
-    @elseif ($transaksi->status === 'pending')
-        <p style="color: orange;">Menunggu pembayaran...</p>
-    @elseif ($transaksi->status === 'failed')
-        <p style="color: red;">Pembayaran gagal atau kadaluarsa.</p>
+    <p>Status saat ini: <strong>{{ $transaksi->status }}</strong></p>
+
+    @if ($transaksi->status == 'success')
+        <script>
+            window.location.href = "{{ route('dashboard') }}"; // redirect jika berhasil
+        </script>
     @endif
 </body>
 </html>
