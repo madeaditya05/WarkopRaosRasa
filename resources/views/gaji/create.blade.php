@@ -43,7 +43,7 @@
 
                     <div class="mb-3">
                         <label for="tunjangan" class="form-label">Tunjangan</label>
-                        <input type="number" name="tunjangan" class="form-control" value="{{ old('tunjangan') }}">
+                        <input type="number" name="tunjangan" class="form-control" value="{{ old('tunjangan') }}" required>
                     </div>
 
                     <button type="submit" class="btn btn-primary">Simpan</button>
