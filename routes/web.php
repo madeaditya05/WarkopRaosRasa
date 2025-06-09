@@ -17,6 +17,8 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PenjualanController;
 use App\Http\Controllers\TransaksiOfflineController;
 
+use App\Http\Controllers\LaporanJurnalController;
+
 use App\Http\Controllers\KeranjangController;
 use App\Http\Controllers\GajiController;
 // Halaman awal
@@ -149,6 +151,11 @@ Route::get('/transaksi/export', [PembelianBahanBakuController::class, 'exportInd
 // laporan
 
 Route::get('/laporan-jurnal', [App\Http\Controllers\LaporanJurnalController::class, 'index'])->name('laporan.jurnal');
+Route::get('/laporan/transaksi-offline', [TransaksiOfflineController::class, 'laporanPdf'])->name('laporan.transaksi-offline');
+
+
+Route::get('/laporan/jurnal/pdf', [LaporanJurnalController::class, 'exportPdf'])->name('laporan.jurnal.pdf');
+
 
 
 });
