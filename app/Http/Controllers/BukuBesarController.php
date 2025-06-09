@@ -4,17 +4,16 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\TransaksiOffline;
-use PDF;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\DB;
 
 class BukuBesarController extends Controller
 {
     public function index(Request $request)
     {
         $bukuBesar = $this->getBukuBesar($request);
+        $akunKasDanPenjualan = ['Kas', 'Penjualan', 'Pembelian Bahan Baku', 'Gaji'];
 
-        // Kirim pilihan akun juga ke view untuk dropdown
-        $akunKasDanPenjualan = ['Kas', 'Penjualan'];
-        
         return view('buku-besar.index', compact('bukuBesar', 'akunKasDanPenjualan'));
     }
 
@@ -28,51 +27,89 @@ class BukuBesarController extends Controller
 
     private function getBukuBesar(Request $request)
     {
-        $query = TransaksiOffline::with('details');
-
-        if ($request->filled('tanggal')) {
-            $query->whereDate('tanggal_pesan', $request->tanggal);
-        }
-
-        $transaksis = $query->orderBy('tanggal_pesan')->get();
+        $tanggalFilter = $request->input('tanggal');
+        $filterAkun = $request->input('akun');
 
         $bukuBesar = [];
 
-        // Filter akun dari request, default null (semua)
-        $filterAkun = $request->input('akun'); // Contoh: 'Kas' atau 'Penjualan'
+        // 1. Penjualan
+        $penjualan = TransaksiOffline::query();
+        if ($tanggalFilter) $penjualan->whereDate('tanggal_pesan', $tanggalFilter);
 
-        foreach ($transaksis as $transaksi) {
-            $tanggal = $transaksi->tanggal_pesan;
-            $faktur = $transaksi->no_faktur;
-            $total = $transaksi->total_harga;
-
-            // Jika filter akun dipilih, cek dulu apakah transaksi masuk akun tsb
+        foreach ($penjualan->get() as $trx) {
             if (!$filterAkun || $filterAkun == 'Kas') {
                 $bukuBesar['Kas'][] = [
-                    'tanggal' => $tanggal,
-                    'keterangan' => "Penjualan Offline ($faktur)",
+                    'tanggal' => $trx->tanggal_pesan,
+                    'keterangan' => "Penjualan Offline ({$trx->no_faktur})",
                     'ref' => 'Jurnal',
-                    'debit' => $total,
+                    'debit' => $trx->total_harga,
                     'kredit' => 0
                 ];
             }
-
             if (!$filterAkun || $filterAkun == 'Penjualan') {
                 $bukuBesar['Penjualan'][] = [
-                    'tanggal' => $tanggal,
-                    'keterangan' => "Penjualan Offline ($faktur)",
+                    'tanggal' => $trx->tanggal_pesan,
+                    'keterangan' => "Penjualan Offline ({$trx->no_faktur})",
                     'ref' => 'Jurnal',
                     'debit' => 0,
-                    'kredit' => $total
+                    'kredit' => $trx->total_harga
                 ];
             }
         }
 
-        // Jika filter akun dipilih, hapus akun lain supaya di view hanya tampil akun yang dipilih
+        // 2. Pembelian
+        $pembelian = DB::table('transaksi_pembelian_bahan_baku');
+        if ($tanggalFilter) $pembelian->whereDate('tanggal', $tanggalFilter);
+
+        foreach ($pembelian->get() as $trx) {
+            if (!$filterAkun || $filterAkun == 'Kas') {
+                $bukuBesar['Kas'][] = [
+                    'tanggal' => $trx->tanggal,
+                    'keterangan' => "Pembelian Bahan Baku (#{$trx->id})",
+                    'ref' => 'Jurnal',
+                    'debit' => 0,
+                    'kredit' => $trx->subtotal
+                ];
+            }
+            if (!$filterAkun || $filterAkun == 'Pembelian Bahan Baku') {
+                $bukuBesar['Pembelian Bahan Baku'][] = [
+                    'tanggal' => $trx->tanggal,
+                    'keterangan' => "Pembelian Bahan Baku (#{$trx->id})",
+                    'ref' => 'Jurnal',
+                    'debit' => $trx->subtotal,
+                    'kredit' => 0
+                ];
+            }
+        }
+
+        // 3. Gaji
+        $gaji = DB::table('gaji');
+        if ($tanggalFilter) $gaji->whereDate('tanggal', $tanggalFilter);
+
+        foreach ($gaji->get() as $row) {
+            if (!$filterAkun || $filterAkun == 'Kas') {
+                $bukuBesar['Kas'][] = [
+                    'tanggal' => $row->tanggal,
+                    'keterangan' => "Pembayaran Gaji (Karyawan ID {$row->karyawan_id})",
+                    'ref' => 'Jurnal',
+                    'debit' => 0,
+                    'kredit' => $row->total_gaji
+                ];
+            }
+            if (!$filterAkun || $filterAkun == 'Gaji') {
+                $bukuBesar['Gaji'][] = [
+                    'tanggal' => $row->tanggal,
+                    'keterangan' => "Pembayaran Gaji (Karyawan ID {$row->karyawan_id})",
+                    'ref' => 'Jurnal',
+                    'debit' => $row->total_gaji,
+                    'kredit' => 0
+                ];
+            }
+        }
+
+        // Filter akun spesifik
         if ($filterAkun) {
-            $bukuBesar = [
-                $filterAkun => $bukuBesar[$filterAkun] ?? []
-            ];
+            $bukuBesar = [$filterAkun => $bukuBesar[$filterAkun] ?? []];
         }
 
         return $bukuBesar;
