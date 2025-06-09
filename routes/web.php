@@ -158,6 +158,14 @@ Route::get('/laporan/transaksi-offline', [TransaksiOfflineController::class, 'la
 Route::get('/laporan/jurnal/pdf', [LaporanJurnalController::class, 'exportPdf'])->name('laporan.jurnal.pdf');
 
 
+// untuk berita
+// Route::get('berita', [App\Http\Controllers\BeritaController::class,'index']);
+
+
+Route::get('/berita', [App\Http\Controllers\BeritaController::class,'index'])->name("berita.index");
+
+
+Route::get('motivasi', [App\Http\Controllers\BeritaController::class,'motivasi'])->middleware(['customer']);
 
 });
 
