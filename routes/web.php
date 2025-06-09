@@ -151,6 +151,14 @@ Route::get('/transaksi/export', [PembelianBahanBakuController::class, 'exportInd
 
 Route::get('/laporan-jurnal', [App\Http\Controllers\LaporanJurnalController::class, 'index'])->name('laporan.jurnal');
 
+// untuk berita
+// Route::get('berita', [App\Http\Controllers\BeritaController::class,'index']);
+
+
+Route::get('/berita', [App\Http\Controllers\BeritaController::class,'index'])->name("berita.index");
+
+
+Route::get('motivasi', [App\Http\Controllers\BeritaController::class,'motivasi'])->middleware(['customer']);
 
 });
 
