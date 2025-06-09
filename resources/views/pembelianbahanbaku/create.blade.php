@@ -80,7 +80,7 @@
 
 
                 <div class="text-end">
-                    <button type="submit" class="btn btn-primary">Simpan Transaksi</button>
+                    <button type="submit" class="btn btn-primary"> Transaksi ....</button>
                 </div>
             </form>
         </div>
