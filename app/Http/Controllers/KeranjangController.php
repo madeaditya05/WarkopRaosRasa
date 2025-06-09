@@ -6,13 +6,13 @@ use Illuminate\Http\Request;
 use App\Models\MenuMakanan;
 use App\Models\Transaksi;
 use App\Services\MidtransService;
+use Midtrans\Transaction;
 
 class KeranjangController extends Controller
 {
     public function index()
     {
-        $keranjang = session()->get('keranjang', []);
-        return view('keranjang.index', compact('keranjang'));
+        //
     }
 
     public function store(Request $request)
@@ -89,6 +89,7 @@ class KeranjangController extends Controller
         $total = array_sum(array_map(fn($item) => $item['harga'] * $item['jumlah'], $keranjang));
         $orderId = 'INV-' . time();
 
+        //Ini digunakan oleh Midtrans Snap untuk membuat link pembayaran.
         $payload = [
             'transaction_details' => [
                 'order_id' => $orderId,
@@ -105,9 +106,16 @@ class KeranjangController extends Controller
                     'quantity' => $item['jumlah'],
                     'name' => $item['nama'],
                 ];
-            })->values()->toArray()
+            })->values()->toArray(),
+
+            // ✅ Tambahkan bagian ini
+        'callbacks' => [
+            'finish' => route('checkout.success'), // ini redirect setelah selesai bayar
+        ],
+
         ];
 
+        //Redirect user ke halaman pembayaran Midtrans.
         $snap = MidtransService::createTransaction($payload);
 
         Transaksi::create([
@@ -118,6 +126,20 @@ class KeranjangController extends Controller
             'keranjang_data' => json_encode($keranjang),
         ]);
 
+
         return redirect($snap->redirect_url);
     }
+
+    public function status($order_id)
+    {
+        $transaksi = Transaksi::where('order_id', $order_id)->first();
+
+        if (!$transaksi) {
+            abort(404, 'Transaksi tidak ditemukan');
+        }
+
+        return view('autorefresh', compact('transaksi'));
+    }
+
+
 }

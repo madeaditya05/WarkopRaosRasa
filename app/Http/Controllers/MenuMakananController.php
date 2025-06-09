@@ -41,7 +41,7 @@ class MenuMakananController extends Controller
         $tampil_indomie = MenuMakanan::where('kategori', 'Indomie')->get(); // atau sesuai field kategori Anda
         return view('menu_makanan.kategori.indomie', compact('tampil_indomie'));
     }
-
+    
     public function showKornet()
     {
         $tampil_kornet = MenuMakanan::where('kategori', 'Kornet')->get(); // atau sesuai field kategori Anda
@@ -50,7 +50,7 @@ class MenuMakananController extends Controller
 
     public function showNasi()
     {
-        $tampil_nasi = MenuMakanan::where('kategori', 'Nasi')->get(); // atau sesuai field kategori Anda
+        $tampil_nasi = MenuMakanan::where('kategori', 'Nasi/Mie')->get(); // atau sesuai field kategori Anda
         return view('menu_makanan.kategori.nasi', compact('tampil_nasi'));
     }
 

@@ -12,6 +12,7 @@ use App\Http\Controllers\TransaksiPembelianBahanBakuController;
 use App\Http\Controllers\DetailTransaksiPembelianBahanBakuController;
 use App\Http\Controllers\PembelianBahanBakuController;
 use App\Http\Controllers\MidtransController;
+use App\Http\Controllers\DashboardController;
 
 use App\Http\Controllers\PenjualanController;
 use App\Http\Controllers\TransaksiOfflineController;
@@ -82,7 +83,7 @@ Route::get('/search', [MenuMakananController::class, 'showSearch'])->name('showS
 
 Route::get('/keranjang/checkout', [KeranjangController::class, 'checkout'])->name('keranjang.checkout');
 
-Route::post('/midtrans/callback', [MidtransController::class, 'callback']);
+
 
 Route::get('/keranjang', [KeranjangController::class, 'index'])->name('keranjang.index');
 Route::post('/keranjang', [KeranjangController::class, 'store'])->name('keranjang.store');
@@ -92,6 +93,7 @@ Route::get('/keranjang/checkout', [KeranjangController::class, 'checkout'])->nam
 
 Route::put('/keranjang/update/{id}', [KeranjangController::class, 'update'])->name('keranjang.update');
 Route::delete('/keranjang/hapus/{id}', [KeranjangController::class, 'destroy'])->name('keranjang.destroy');
+
 
     //arannnnntzy
 Route::resource('penjualan', PenjualanController::class);
@@ -108,7 +110,11 @@ Route::middleware(['auth'])->group(function () {
 
 });
 
-});
+Route::get('/checkout/success', [App\Http\Controllers\CheckoutController::class, 'success'])->name('checkout.success');
+
+
+
+Route::get('/dashboard_admin', [DashboardController::class, 'index'])->name('dashboard_admin');
 
 //GIBETTTT
 // Pembelian bahan baku
@@ -135,3 +141,11 @@ Route::get('/transaksi/export', [PembelianBahanBakuController::class, 'exportInd
 
 
 
+});
+
+
+Route::get('/status-transaksi/{order_id}', [App\Http\Controllers\KeranjangController::class, 'status'])->name('transaksi.status');
+
+Route::get('/autorefresh/{order_id}', [KeranjangController::class, 'status'])->name('checkout.status');
+
+Route::post('/midtrans/callback', [MidtransController::class, 'callback']);

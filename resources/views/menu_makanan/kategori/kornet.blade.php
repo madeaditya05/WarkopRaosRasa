@@ -33,7 +33,7 @@
                                         <button type="button" class="btn btn-outline-secondary" onclick="adjustQuantity('increment', '{{ $menu->id }}')">+</button>
                                     </div>
 
-                                    <button type="submit" class="btn btn-primary w-100 mt-2">Tambah ke Keranjang</button>
+                                     <button type="submit" class="btn w-100 mt-2" style="background-color: rgb(95, 58, 31); color: white;">Tambah ke Keranjang</button>
                                 </form>
                             @else
                                 <button class="btn btn-danger w-100" disabled>Tidak Tersedia</button>
