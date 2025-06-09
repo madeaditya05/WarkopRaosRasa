@@ -48,7 +48,7 @@ class GajiController extends Controller
             'karyawan_id' => 'required|exists:karyawan,id',
             'tanggal' => 'required|date',
             'gaji_pokok' => 'required|numeric',
-            'tunjangan' => 'nullable|numeric',
+            'tunjangan' => 'required|numeric',
         ]);
 
         $tunjangan = $request->tunjangan;
