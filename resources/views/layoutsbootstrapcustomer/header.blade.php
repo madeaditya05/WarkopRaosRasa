@@ -22,7 +22,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&family=Open+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    
 
     <!-- Tambahkan ini di bagian <head> -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
@@ -82,7 +82,6 @@
             <a href="#" class="rounded-circle bg-light p-2 mx-1 d-inline-block" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false" style="width: 50px; height: 50px; display: flex; justify-content: center; align-items: center; overflow: hidden;">
               <img src="{{ asset('images/profile/user-1.jpg') }}" alt="Profile" class="rounded-circle" style="width: 100%; height: 100%; object-fit: cover;">
             </a>
-
             
 
 
@@ -215,6 +214,10 @@
         </div>
       </div>
 
+      <div class="preloader-wrapper">
+      <div class="preloader">
+      </div>
+    </div>
     
     <div class="offcanvas offcanvas-end" data-bs-scroll="true" tabindex="-1" id="offcanvasCart" aria-labelledby="My Cart">
     <div class="offcanvas-header justify-content-center">
@@ -280,7 +283,6 @@
     </div>
 </div>
 
-
     
     <div class="offcanvas offcanvas-end" data-bs-scroll="true" tabindex="-1" id="offcanvasSearch" aria-labelledby="Search">
       <div class="offcanvas-header justify-content-center">
@@ -298,5 +300,8 @@
         </div>
       </div>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
 
 </body>

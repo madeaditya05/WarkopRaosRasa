@@ -77,7 +77,7 @@
                         <div class="content-wrapper col-md-7">
                           <div class="categories my-3">100% murah</div>
                           <h3 class="display-4 text-white">Paket Hemat 1</h3>
-                          <p class="text-white">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Dignissim massa diam elementum.</p>
+                          <p class="text-white">Paket lengkap dengan porsi pas di kantong! Berisi nasi, lauk lezat, dan pelengkap yang bikin kenyang tanpa bikin boros.</p>
                           <a href="#" class="btn btn-outline-light btn-lg text-uppercase fs-6 rounded-1 px-4 py-3 mt-3">Shop Now</a>
                         </div>
                         <div class="img-wrapper col-md-5">
@@ -91,7 +91,7 @@
                         <div class="content-wrapper col-md-7">
                           <div class="categories mb-3 pb-3">100% murah</div>
                           <h3 class="banner-title text-white">Nasi Orak Arik Sarden</h3>
-                          <p class="text-white">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Dignissim massa diam elementum.</p>
+                          <p class="text-white">Nasi hangat dipadukan dengan telur orak-arik dan sarden bercita rasa pedas manis yang menggugah selera.</p>
                           <a href="#" class="btn btn-outline-light btn-lg text-uppercase fs-6 rounded-1">Shop Collection</a>
                         </div>
                         <div class="img-wrapper col-md-5">
@@ -105,7 +105,7 @@
                         <div class="content-wrapper col-md-7">
                           <div class="categories mb-3 pb-3">100% murah</div>
                           <h3 class="banner-title text-white">Mie Dok Dok</h3>
-                          <p class="text-white">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Dignissim massa diam elementum.</p>
+                          <p class="text-white">Mie kuah pedas khas warung, dimasak dadakan dengan telur dan sayur, cocok dinikmati hangat-hangat.</p>
                           <a href="#" class="btn btn-outline-light btn-lg text-uppercase fs-6 rounded-1">Shop Collection</a>
                         </div>
                         <div class="img-wrapper col-md-5">
@@ -127,14 +127,14 @@
                   <div class="content-wrapper col-md-7">
                   <div class="categories sale mb-3 pb-3" style="color: rgb(255, 196, 63) !important; border-bottom: 2px solid rgb(255, 196, 63) !important;">20% off</div>
  
-                    <h3 class="banner-title text-white">Fruits & Vegetables</h3>
+                    <h3 class="banner-title text-white">Extra Joss + Susu</h3>
                     <a href="#" class="d-flex align-items-center nav-link text-white">Shop Collection <svg width="24" height="24"><use xlink:href="#arrow-right"></use></svg></a>
                   </div>
 
                 </div>
               </div>
 
-              <div class="banner-ad block-3" style="background:url('images/ad-image-2.png') no-repeat;background-position: right bottom; background-color: #5f3a1f;">
+              <div class="banner-ad block-3" style="background:url('images/product-thumb-5.png') no-repeat right bottom / 294px 243px; background-color: #5f3a1f;">
                 <div class="row banner-content p-5">
 
                   <div class="content-wrapper col-md-7">
@@ -151,7 +151,7 @@
   }
 </style>
 
-                    <h3 class="item-title text-white">Baked Products</h3>
+                    <h3 class="item-title text-white">Nasi Goreng</h3>
                     <a href="#" class="d-flex align-items-center nav-link text-white">Shop Collection <svg width="24" height="24"><use xlink:href="#arrow-right"></use></svg></a>
                   </div>
 
@@ -240,12 +240,13 @@
         <div class="row">
           
           <div class="col-md-6">
-            <div class="banner-ad mb-3" style="background: url('images/ad-image-3.png');background-repeat: no-repeat;background-position: right bottom; background-color:rgb(95, 58, 31);">
+           <div class="banner-ad mb-3" style="background: url('images/product-thumb-11.png'); background-repeat: no-repeat; background-position: right bottom; background-size: 280px auto; background-color: rgb(95, 58, 31);">
+
               <div class="banner-content p-5">
 
                 <div class="categories text-primary fs-3 fw-bold">Upto 25% Off</div>
-                <h3 class="banner-title text-white">Luxa Dark Chocolate</h3>
-                <p class="text-white">Very tasty & creamy vanilla flavour creamy muffins.</p>
+                <h3 class="banner-title text-white">Paket Hemat 5</h3>
+                <p class="text-white">Dijamin Kenyang dan Enak</p>
                 <a href="#" class="btn btn-light text-uppercase">Show Now</a>
 
               </div>
@@ -253,12 +254,12 @@
             </div>
           </div>
           <div class="col-md-6">
-            <div class="banner-ad" style="background: url('images/ad-image-4.png');background-repeat: no-repeat;background-position: right bottom; background-color:rgb(95, 58, 31);">
+            <div class="banner-ad" style="background: url('images/product-thumb-12.png');background-repeat: no-repeat;background-position: right bottom; background-size: 290px auto; background-color:rgb(95, 58, 31);">
               <div class="banner-content p-5">
 
                 <div class="categories text-primary fs-3 fw-bold">Upto 25% Off</div>
-                <h3 class="banner-title text-white">Creamy Muffins</h3>
-                <p class="text-white">Very tasty & creamy vanilla flavour creamy muffins.</p>
+                <h3 class="banner-title text-white">Susu Jahe</h3>
+                <p class="text-white">Cocok untuk Menghangatkan Tubuh</p>
                 <a href="#" class="btn btn-light text-uppercase">Show Now</a>
 
               </div>
@@ -280,7 +281,7 @@
               <h2 class="section-title" style="color: rgb(95, 58, 31)">Best selling products</h2>
 
               <div class="d-flex align-items-center">
-                <a href="#" class="btn-link text-decoration-none" style="color: rgb(95, 58, 31)">View All Categories →</a>
+                <a href="#" class="btn-link text-decoration-none" style="color: rgb(95, 58, 31)">View Best Selling Categories →</a>
                 <div class="swiper-buttons">
                   <button class="swiper-prev products-carousel-prev btn btn-yellow">❮</button>
                   <button class="swiper-next products-carousel-next btn btn-yellow">❯</button>
@@ -297,147 +298,103 @@
               <div class="swiper-wrapper">
                 
                 <div class="product-item swiper-slide">
-                  <span class="badge bg-success position-absolute m-3">-15%</span>
-                  <a href="#" class="btn-wishlist"><svg width="24" height="24"><use xlink:href="#heart"></use></svg></a>
-                  <figure>
-                    <a href="index.html" title="Product Title">
-                      <img src="images/thumb-tomatoes.png"  class="tab-image">
-                    </a>
-                  </figure>
-                  <h3>Sunstar Fresh Melon Juice</h3>
-                  <span class="qty">1 Unit</span><span class="rating"><svg width="24" height="24" class="text-primary"><use xlink:href="#star-solid"></use></svg> 4.5</span>
-                  <span class="price">$18.00</span>
-                  <div class="d-flex align-items-center justify-content-between">
-                    <div class="input-group product-qty">
-                        <span class="input-group-btn">
-                            <button type="button" class="quantity-left-minus btn btn-danger btn-number" data-type="minus">
-                              <svg width="16" height="16"><use xlink:href="#minus"></use></svg>
-                            </button>
-                        </span>
-                        <input type="text" id="quantity" name="quantity" class="form-control input-number" value="1">
-                        <span class="input-group-btn">
-                            <button type="button" class="quantity-right-plus btn btn-success btn-number" data-type="plus">
-                                <svg width="16" height="16"><use xlink:href="#plus"></use></svg>
-                            </button>
-                        </span>
-                    </div>
-                    <a href="#" class="nav-link">Add to Cart <iconify-icon icon="uil:shopping-cart"></a>
-                  </div>
-                </div>
+              <span class="badge bg-success position-absolute m-3">-7%</span>
+              <a href="#" class="btn-wishlist">
+                <svg width="24" height="24"><use xlink:href="#heart"></use></svg>
+              </a>
+              <figure>
+                <a href="index.html" title="Product Title">
+                  <img src="images/product-thumb-6.png" class="tab-image">
+                </a>
+              </figure>
+              <h3>Nasi Kornet Sosis</h3>
+              <span class="qty">Stok 20</span>
+              <span class="rating">
+                <svg width="24" height="24" class="text-primary"><use xlink:href="#star-solid"></use></svg> 4.9
+              </span>
+              <span class="price">Rp 15.000</span>
 
-                <div class="product-item swiper-slide">
-                  <span class="badge bg-success position-absolute m-3">-15%</span>
-                  <a href="#" class="btn-wishlist"><svg width="24" height="24"><use xlink:href="#heart"></use></svg></a>
-                  <figure>
-                    <a href="index.html" title="Product Title">
-                      <img src="images/thumb-tomatoketchup.png"  class="tab-image">
-                    </a>
-                  </figure>
-                  <h3>Sunstar Fresh Melon Juice</h3>
-                  <span class="qty">1 Unit</span><span class="rating"><svg width="24" height="24" class="text-primary"><use xlink:href="#star-solid"></use></svg> 4.5</span>
-                  <span class="price">$18.00</span>
-                  <div class="d-flex align-items-center justify-content-between">
-                    <div class="input-group product-qty">
-                        <span class="input-group-btn">
-                            <button type="button" class="quantity-left-minus btn btn-danger btn-number" data-type="minus">
-                              <svg width="16" height="16"><use xlink:href="#minus"></use></svg>
-                            </button>
-                        </span>
-                        <input type="text" id="quantity" name="quantity" class="form-control input-number" value="1">
-                        <span class="input-group-btn">
-                            <button type="button" class="quantity-right-plus btn btn-success btn-number" data-type="plus">
-                                <svg width="16" height="16"><use xlink:href="#plus"></use></svg>
-                            </button>
-                        </span>
-                    </div>
-                    <a href="#" class="nav-link">Add to Cart <iconify-icon icon="uil:shopping-cart"></a>
+              <!-- Bagian bawah dimodifikasi -->
+              <div class="d-flex align-items-center justify-content-between">
+                <!-- Tetap pakai div ini agar ukuran tidak berubah -->
+                <div style="visibility: hidden; width: 100%;">
+                  <!-- Placeholder kosong agar struktur tetap -->
+                  <div class="input-group product-qty">
+                    <!-- Kosong tapi tetap jaga ukuran -->
                   </div>
                 </div>
+                <!-- Ganti Add to Cart dengan label Best Seller -->
+                <span class="badge  text-white px-3 py-2 rounded-pill" style="background-color: rgb(95, 58, 31);" >Best Seller</span>
+              </div>
+            </div>
+<div class="product-item swiper-slide">
+  <span class="badge bg-success position-absolute m-3">-5%</span>
+  <a href="#" class="btn-wishlist"><svg width="24" height="24"><use xlink:href="#heart"></use></svg></a>
+  <figure>
+    <a href="index.html" title="Product Title">
+      <img src="images/product-thumb-9.png" class="tab-image">
+    </a>
+  </figure>
+  <h3>Kopi ABC Susu</h3>
+  <span class="qty">Stok 33</span><span class="rating"><svg width="24" height="24" class="text-primary"><use xlink:href="#star-solid"></use></svg> 4.9</span>
+  <span class="price">Rp 4.000</span>
+  <div class="d-flex align-items-center justify-content-between">
+    <div style="visibility: hidden; width: 100%;"></div>
+    <span class="badge  text-white px-3 py-2 rounded-pill" style="background-color: rgb(95, 58, 31);" >Best Seller</span>
+  </div>
+</div>
 
-                <div class="product-item swiper-slide">
-                  <span class="badge bg-success position-absolute m-3">-15%</span>
-                  <a href="#" class="btn-wishlist"><svg width="24" height="24"><use xlink:href="#heart"></use></svg></a>
-                  <figure>
-                    <a href="index.html" title="Product Title">
-                      <img src="images/thumb-bananas.png"  class="tab-image">
-                    </a>
-                  </figure>
-                  <h3>Sunstar Fresh Melon Juice</h3>
-                  <span class="qty">1 Unit</span><span class="rating"><svg width="24" height="24" class="text-primary"><use xlink:href="#star-solid"></use></svg> 4.5</span>
-                  <span class="price">$18.00</span>
-                  <div class="d-flex align-items-center justify-content-between">
-                    <div class="input-group product-qty">
-                        <span class="input-group-btn">
-                            <button type="button" class="quantity-left-minus btn btn-danger btn-number" data-type="minus">
-                              <svg width="16" height="16"><use xlink:href="#minus"></use></svg>
-                            </button>
-                        </span>
-                        <input type="text" id="quantity" name="quantity" class="form-control input-number" value="1">
-                        <span class="input-group-btn">
-                            <button type="button" class="quantity-right-plus btn btn-success btn-number" data-type="plus">
-                                <svg width="16" height="16"><use xlink:href="#plus"></use></svg>
-                            </button>
-                        </span>
-                    </div>
-                    <a href="#" class="nav-link">Add to Cart <iconify-icon icon="uil:shopping-cart"></a>
-                  </div>
-                </div>
+<div class="product-item swiper-slide">
+  <span class="badge bg-success position-absolute m-3">-3%</span>
+  <a href="#" class="btn-wishlist"><svg width="24" height="24"><use xlink:href="#heart"></use></svg></a>
+  <figure>
+    <a href="index.html" title="Product Title">
+      <img src="images/product-thumb-10.png" class="tab-image">
+    </a>
+  </figure>
+  <h3>Nasi Maud</h3>
+  <span class="qty">Stok 27</span><span class="rating"><svg width="24" height="24" class="text-primary"><use xlink:href="#star-solid"></use></svg> 4.8</span>
+  <span class="price">Rp 13.000</span>
+  <div class="d-flex align-items-center justify-content-between">
+    <div style="visibility: hidden; width: 100%;"></div>
+    <span class="badge  text-white px-3 py-2 rounded-pill" style="background-color: rgb(95, 58, 31);" >Best Seller</span>
+  </div>
+</div>
 
-                <div class="product-item swiper-slide">
-                  <span class="badge bg-success position-absolute m-3">-15%</span>
-                  <a href="#" class="btn-wishlist"><svg width="24" height="24"><use xlink:href="#heart"></use></svg></a>
-                  <figure>
-                    <a href="index.html" title="Product Title">
-                      <img src="images/thumb-bananas.png"  class="tab-image">
-                    </a>
-                  </figure>
-                  <h3>Sunstar Fresh Melon Juice</h3>
-                  <span class="qty">1 Unit</span><span class="rating"><svg width="24" height="24" class="text-primary"><use xlink:href="#star-solid"></use></svg> 4.5</span>
-                  <span class="price">$18.00</span>
-                  <div class="d-flex align-items-center justify-content-between">
-                    <div class="input-group product-qty">
-                        <span class="input-group-btn">
-                            <button type="button" class="quantity-left-minus btn btn-danger btn-number" data-type="minus">
-                              <svg width="16" height="16"><use xlink:href="#minus"></use></svg>
-                            </button>
-                        </span>
-                        <input type="text" id="quantity" name="quantity" class="form-control input-number" value="1">
-                        <span class="input-group-btn">
-                            <button type="button" class="quantity-right-plus btn btn-success btn-number" data-type="plus">
-                                <svg width="16" height="16"><use xlink:href="#plus"></use></svg>
-                            </button>
-                        </span>
-                    </div>
-                    <a href="#" class="nav-link">Add to Cart <iconify-icon icon="uil:shopping-cart"></a>
-                  </div>
-                </div>
-                <div class="product-item swiper-slide">
-                  <a href="#" class="btn-wishlist"><svg width="24" height="24"><use xlink:href="#heart"></use></svg></a>
-                  <figure>
-                    <a href="index.html" title="Product Title">
-                      <img src="images/thumb-tomatoes.png"  class="tab-image">
-                    </a>
-                  </figure>
-                  <h3>Sunstar Fresh Melon Juice</h3>
-                  <span class="qty">1 Unit</span><span class="rating"><svg width="24" height="24" class="text-primary"><use xlink:href="#star-solid"></use></svg> 4.5</span>
-                  <span class="price">$18.00</span>
-                  <div class="d-flex align-items-center justify-content-between">
-                    <div class="input-group product-qty">
-                        <span class="input-group-btn">
-                            <button type="button" class="quantity-left-minus btn btn-danger btn-number" data-type="minus">
-                              <svg width="16" height="16"><use xlink:href="#minus"></use></svg>
-                            </button>
-                        </span>
-                        <input type="text" id="quantity" name="quantity" class="form-control input-number" value="1">
-                        <span class="input-group-btn">
-                            <button type="button" class="quantity-right-plus btn btn-success btn-number" data-type="plus">
-                                <svg width="16" height="16"><use xlink:href="#plus"></use></svg>
-                            </button>
-                        </span>
-                    </div>
-                    <a href="#" class="nav-link">Add to Cart <iconify-icon icon="uil:shopping-cart"></a>
-                  </div>
-                </div>
+<div class="product-item swiper-slide">
+  <span class="badge bg-success position-absolute m-3">-7%</span>
+  <a href="#" class="btn-wishlist"><svg width="24" height="24"><use xlink:href="#heart"></use></svg></a>
+  <figure>
+    <a href="index.html" title="Product Title">
+      <img src="images/product-thumb-8.png" class="tab-image">
+    </a>
+  </figure>
+  <h3>Hilo Thai Tea</h3>
+  <span class="qty">Stok 23</span><span class="rating"><svg width="24" height="24" class="text-primary"><use xlink:href="#star-solid"></use></svg> 4.8</span>
+  <span class="price">Rp 6.000</span>
+  <div class="d-flex align-items-center justify-content-between">
+    <div style="visibility: hidden; width: 100%;"></div>
+    <span class="badge  text-white px-3 py-2 rounded-pill" style="background-color: rgb(95, 58, 31);" >Best Seller</span>
+  </div>
+</div>
+
+<div class="product-item swiper-slide">
+  <span class="badge bg-success position-absolute m-3">-8%</span>
+  <a href="#" class="btn-wishlist"><svg width="24" height="24"><use xlink:href="#heart"></use></svg></a>
+  <figure>
+    <a href="index.html" title="Product Title">
+      <img src="images/product-thumb-7.png" class="tab-image">
+    </a>
+  </figure>
+  <h3>Nasi Orak Arik Omlet</h3>
+  <span class="qty">Stok 20</span><span class="rating"><svg width="24" height="24" class="text-primary"><use xlink:href="#star-solid"></use></svg> 4.7</span>
+  <span class="price">Rp 10.000</span>
+  <div class="d-flex align-items-center justify-content-between">
+    <div style="visibility: hidden; width: 100%;"></div>
+    <span class="badge  text-white px-3 py-2 rounded-pill" style="background-color: rgb(95, 58, 31);" >Best Seller</span>
+  </div>
+</div>
+
 </section>
     <!-- Include Footer -->
   @include('layoutsbootstrapcustomer.footer')

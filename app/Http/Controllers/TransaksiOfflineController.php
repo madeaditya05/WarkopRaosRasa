@@ -131,6 +131,9 @@ class TransaksiOfflineController extends Controller
     public function edit(string $id)
     {
         $transaksi = TransaksiOffline::with('details.menuMakanan')->findOrFail($id);
+
+        $transaksi = TransaksiOffline::with('details')->findOrFail($id);
+
         $pelanggan = Pelanggan::all();
         $menu_makanan = MenuMakanan::where('stok', '>', 0)->get();
 
@@ -158,10 +161,68 @@ class TransaksiOfflineController extends Controller
 
             return redirect()->route('TransaksiOffline.index')
                              ->with('success', 'Transaksi berhasil diperbarui');
+            'tanggal_pesan'   => 'required|date',
+            'pelanggan_id'    => 'required|exists:pelanggan,id',
+            'menu_makanan_id' => 'required|array',
+            'menu_makanan_id.*' => 'exists:menu_makanan,id',
+            'jumlah'          => 'required|array',
+            'jumlah.*'        => 'integer|min:1',
+        ]);
+
+        DB::beginTransaction();
+
+        try {
+            $transaksi = TransaksiOffline::with('details')->findOrFail($id);
+
+            // Restore stok dan terjual
+            foreach ($transaksi->details as $detail) {
+                $menu = MenuMakanan::find($detail->menu_makanan_id);
+                if ($menu) {
+                    $menu->increment('stok', $detail->jumlah);
+                    $menu->decrement('terjual', $detail->jumlah);
+                }
+            }
+
+            // Hapus detail lama
+            $transaksi->details()->delete();
+
+            // Hitung ulang total
+            $total = 0;
+            foreach ($request->menu_makanan_id as $index => $menuId) {
+                $menu     = MenuMakanan::findOrFail($menuId);
+                $jumlah   = $request->jumlah[$index];
+                $subtotal = $menu->harga * $jumlah;
+                $total   += $subtotal;
+
+                // Simpan detail baru
+                TransaksiOfflineDetail::create([
+                    'transaksi_offline_id' => $transaksi->id,
+                    'menu_makanan_id'      => $menuId,
+                    'jumlah'               => $jumlah,
+                    'subtotal'             => $subtotal,
+                ]);
+
+                $menu->decrement('stok', $jumlah);
+                $menu->increment('terjual', $jumlah);
+            }
+
+            // Update transaksi utama
+            $transaksi->update([
+                'tanggal_pesan' => $request->tanggal_pesan,
+                'pelanggan_id'  => $request->pelanggan_id,
+                'total_harga'   => $total,
+            ]);
+
+            DB::commit();
+
+            return redirect()->route('TransaksiOffline.index')
+                            ->with('success', 'Transaksi berhasil diperbarui.');
+
         } catch (\Throwable $e) {
             DB::rollBack();
             return back()->withErrors('Gagal memperbarui transaksi: ' . $e->getMessage());
         }
+
     }
 
     /**
@@ -171,7 +232,9 @@ class TransaksiOfflineController extends Controller
     {
         $transaksi_offline = TransaksiOffline::with('pelanggan', 'details.menuMakanan')->findOrFail($id);
         return view('transaksi_offline.show', compact('transaksi_offline'));
+
     }
+
 
     /**
      * Remove the specified resource from storage.

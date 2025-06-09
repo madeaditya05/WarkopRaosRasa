@@ -18,7 +18,6 @@
                         <div class="card-body">
                             <h5 class="card-title">{{ $menu->nama_menu }}</h5>
                             <p class="card-text">{{ $menu->deskripsi }}</p>
-                            <p class="text-muted mb-1">Stok: {{ $menu->stok }}</p>
                             <p class="text-dark fw-semibold mb-3">Rp{{ number_format($menu->harga, 0, ',', '.') }}</p>
 
                             @if ($menu->stok > 0)
@@ -33,7 +32,7 @@
                                         <button type="button" class="btn btn-outline-secondary" onclick="adjustQuantity('increment', '{{ $menu->id }}')">+</button>
                                     </div>
 
-                                    <button type="submit" class="btn btn-primary w-100 mt-2">Tambah ke Keranjang</button>
+                                     <button type="submit" class="btn w-100 mt-2" style="background-color: rgb(95, 58, 31); color: white;">Tambah ke Keranjang</button>
                                 </form>
                             @else
                                 <button class="btn btn-danger w-100" disabled>Tidak Tersedia</button>

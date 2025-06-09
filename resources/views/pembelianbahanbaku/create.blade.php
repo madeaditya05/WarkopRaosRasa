@@ -3,7 +3,7 @@
 @section('konten')
 <div class="body-wrapper">
     <div class="card mt-4">
-        <div class="card-body">
+         <div class="card-body">
             <h5 class="card-title fw-semibold mb-4">Tambah Transaksi Pembelian Bahan Baku</h5>
 
             @if ($errors->any())
