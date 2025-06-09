@@ -99,6 +99,13 @@ Route::resource('TransaksiOffline', TransaksiOfflineController::class);
 Route::get('transaksi-offline/export/pdf', [TransaksiOfflineController::class, 'exportPdf'])
       ->name('TransaksiOffline.exportPdf');
 
+      Route::resource('TransaksiOffline', TransaksiOfflineController::class);
+     Route::get('/TransaksiOffline/{id}', [TransaksiOfflineController::class, 'destroy'])->name('TransaksiOffline.destroy');
+
+
+
+
+
 });
 
 //GIBETTTT

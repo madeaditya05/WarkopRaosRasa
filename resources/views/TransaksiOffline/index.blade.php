@@ -111,23 +111,33 @@
                 <div class="modal-body" id="xid"></div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Cancel</button>
-                    <a id="btn-delete" class="btn btn-danger" href="#">Hapus</a>
+
+                    <!-- Gunakan form untuk method DELETE -->
+                    <form id="deleteForm" action="" method="POST" style="display:inline;">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger">Hapus</button>
+                    </form>
+
                 </div>
             </div>
         </div>
     </div> 
 
     <script>
-        function deleteConfirm(e){
-            var tomboldelete = document.getElementById('btn-delete')  
-            id = e.getAttribute('data-id');
-            var url3 = "{{url('transaksi-offline/destroy/')}}";
-            var url4 = url3.concat("/",id);
-            tomboldelete.setAttribute("href", url4);
-            var pesan = "Data dengan ID <b>"
-            var pesan2 = " </b>akan dihapus"
-            document.getElementById("xid").innerHTML = pesan.concat(id, pesan2);
-            var myModal = new bootstrap.Modal(document.getElementById('deleteModal'), { keyboard: false });
+        function deleteConfirm(el) {
+            let id = el.getAttribute('data-id');
+            let url = "{{ route('TransaksiOffline.destroy', ':id') }}";
+            url = url.replace(':id', id);
+
+            // Set action form delete
+            document.getElementById('deleteForm').action = url;
+
+            // Set pesan modal
+            document.getElementById('xid').innerHTML = `Data dengan ID <b>${id}</b> akan dihapus`;
+
+            // Tampilkan modal
+            let myModal = new bootstrap.Modal(document.getElementById('deleteModal'), { keyboard: false });
             myModal.show();
         }
     </script>
