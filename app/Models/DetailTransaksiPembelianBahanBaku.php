@@ -30,5 +30,12 @@ class DetailTransaksiPembelianBahanBaku extends Model
     {
         return $this->belongsTo(BahanBaku::class, 'bahan_baku_id');
     }
-    
+
+
+    public function transaksiPembelian()
+{
+    return $this->belongsTo(\App\Models\TransaksiPembelianBahanBaku::class, 'transaksi_id');
+}
+
+
 }

@@ -1,6 +1,7 @@
 @extends('layoutsbootstrapadmin')
 
 @section('konten')
+
 <div class="container">
     <h2>Tambah Transaksi Pembelian Bahan Baku</h2>
 
@@ -11,6 +12,91 @@
                 <li>{{ $error }}</li>
             @endforeach
         </ul>
+
+<div class="body-wrapper">
+    <div class="card mt-4">
+         <div class="card-body">
+            <h5 class="card-title fw-semibold mb-4">Tambah Transaksi Pembelian Bahan Baku</h5>
+
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <strong>Oops!</strong> Ada beberapa masalah pada input Anda.<br><br>
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
+            <form action="{{ route('pembelian.store') }}" method="POST">
+                @csrf
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="supplier_id" class="form-label">Supplier</label>
+                        <select name="supplier_id" id="supplier_id" class="form-control">
+                        <option value="">-- Pilih Supplier --</option>
+                        @foreach ($suppliers as $supplier)
+                            <option value="{{ $supplier->id }}">{{ $supplier->nama_supplier }}</option>
+                        @endforeach
+
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="tanggal" class="form-label">Tanggal</label>
+                        <input type="date" name="tanggal" class="form-control" required>
+                    </div>
+                </div>
+
+                <hr>
+                <h5 class="mt-4">Detail Pembelian Bahan Baku</h5>
+                <div class="table-responsive">
+                    <table class="table table-bordered align-middle text-center" id="items-table">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Bahan Baku</th>
+                                <th>Jumlah</th>
+                                <th>Harga Satuan</th>
+                                <th>Subtotal</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="items-container">
+                            <tr>
+                                <td>
+                                    <select name="items[0][bahan_baku_id]" class="form-select" required>
+                                        <option value="">-- Pilih Bahan Baku --</option>
+                                        @foreach ($bahanBakus as $bahan)
+                                            <option value="{{ $bahan->id }}">{{ $bahan->nama_bahan }}</option>
+                                        @endforeach
+                                    </select>
+                                </td>
+                                <td><input type="number" name="items[0][jumlah]" class="form-control jumlah" min="1" required></td>
+                                <td><input type="number" name="items[0][harga_satuan]" class="form-control harga_satuan" min="0" required></td>
+                                <td><input type="number" class="form-control subtotal" readonly></td>
+                                <td><button type="button" class="btn btn-danger btn-remove">Hapus</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="mb-3">
+                    <button type="button" class="btn btn-secondary" id="add-item">Tambah Item</button>
+                </div>
+
+                <div class="text-end mb-3">
+                <label for="total_subtotal" class="form-label fw-semibold">Total Subtotal:</label>
+                <input type="text" id="total_subtotal_display" class="form-control d-inline w-auto text-end" readonly>
+                <input type="hidden" id="total_subtotal" name="subtotal">
+                </div>
+
+
+                <div class="text-end">
+                    <button type="submit" class="btn btn-primary"> Transaksi ....</button>
+                </div>
+            </form>
+        </div>
+
     </div>
     @endif
 

@@ -20,6 +20,9 @@ use App\Http\Controllers\MachineLearningController;
 
 use App\Http\Controllers\PenjualanController;
 use App\Http\Controllers\TransaksiOfflineController;
+use App\Http\Controllers\BukuBesarController;
+
+use App\Http\Controllers\LaporanJurnalController;
 
 use App\Http\Controllers\KeranjangController;
 use App\Http\Controllers\GajiController;
@@ -105,12 +108,19 @@ Route::resource('TransaksiOffline', TransaksiOfflineController::class);
 Route::get('transaksi-offline/export/pdf', [TransaksiOfflineController::class, 'exportPdf'])
       ->name('TransaksiOffline.exportPdf');
 
+      Route::resource('TransaksiOffline', TransaksiOfflineController::class);
+     Route::get('/TransaksiOffline/{id}', [TransaksiOfflineController::class, 'destroy'])->name('TransaksiOffline.destroy');
+
+
+
+
 // Route gaji Hanan
 Route::middleware(['auth'])->group(function () {
     Route::get('/gaji', [GajiController::class, 'index'])->name('gaji.index');
     Route::get('/gaji/create', [GajiController::class, 'create'])->name('gaji.create');
     Route::post('/gaji', [GajiController::class, 'store'])->name('gaji.store');
     Route::get('/gaji/export/pdf', [GajiController::class, 'exportPDF'])->name('gaji.export.pdf');
+
 
 });
 
@@ -154,7 +164,23 @@ Route::get('/pembelian/{id}/export/excel', [PembelianBahanBakuController::class,
 //pdf bahan baku
 Route::get('/transaksi/export', [PembelianBahanBakuController::class, 'exportIndexPDF'])->name('transaksi.export.pdf');
 
+// laporan
 
+Route::get('/laporan-jurnal', [App\Http\Controllers\LaporanJurnalController::class, 'index'])->name('laporan.jurnal');
+Route::get('/laporan/transaksi-offline', [TransaksiOfflineController::class, 'laporanPdf'])->name('laporan.transaksi-offline');
+
+
+Route::get('/laporan/jurnal/pdf', [LaporanJurnalController::class, 'exportPdf'])->name('laporan.jurnal.pdf');
+
+
+// untuk berita
+// Route::get('berita', [App\Http\Controllers\BeritaController::class,'index']);
+
+
+Route::get('/berita', [App\Http\Controllers\BeritaController::class,'index'])->name("berita.index");
+
+
+Route::get('motivasi', [App\Http\Controllers\BeritaController::class,'motivasi'])->middleware(['customer']);
 
 });
 
@@ -164,3 +190,10 @@ Route::get('/status-transaksi/{order_id}', [App\Http\Controllers\KeranjangContro
 Route::get('/autorefresh/{order_id}', [KeranjangController::class, 'status'])->name('checkout.status');
 
 Route::post('/midtrans/callback', [MidtransController::class, 'callback']);
+
+
+// Buku Besar
+Route::get('/buku-besar', [BukuBesarController::class, 'index'])->name('buku-besar');
+Route::get('/buku-besar/export', [BukuBesarController::class, 'export'])->name('buku-besar.export');
+
+

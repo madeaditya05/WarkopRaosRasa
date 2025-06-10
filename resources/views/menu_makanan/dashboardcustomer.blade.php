@@ -396,6 +396,47 @@
 </div>
 
 </section>
+
+<!-- Motivasi Section -->
+<section class="py-3 my-3">
+  <div class="container-fluid">
+    <div class="bg-warning py-4 rounded-5">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-md-8 text-center">
+            <h4 class="font-weight-bold" style="color: black; font-size: 24px; margin-bottom: 15px;">
+              Kalimat Warkop untuk Hari Ini
+            </h4>
+            <p class="font-italic" style="color: black; font-size: 18px; line-height: 1.6;">
+              {{ motivasi() }}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* CSS untuk section motivasi */
+  .bg-warning {
+    background-color: #ffcc00; /* Warna latar belakang kuning cerah */
+    padding: 30px 0; /* Memberikan padding atas dan bawah */
+    border-radius: 15px; /* Membuat sudut rounded pada kotak */
+  }
+
+  /* Responsif, mengubah ukuran font pada layar kecil */
+  @media (max-width: 767px) {
+    .bg-warning h4 {
+      font-size: 20px;
+    }
+    .bg-warning p {
+      font-size: 16px;
+    }
+  }
+</style>
+
+
     <!-- Include Footer -->
   @include('layoutsbootstrapcustomer.footer')
 

@@ -168,7 +168,7 @@
               
                   <ul class="navbar-nav justify-content-end menu-list list-unstyled d-flex gap-md-3 mb-0">
                     <li class="nav-item active">
-                      <a href="#women" class="nav-link" style="color: rgb(95, 58, 31)">Women</a>
+                      <a href="berita" class="nav-link" style="color: rgb(95, 58, 31)">Berita</a>
                     </li>
                     <li class="nav-item dropdown">
                       <a href="#men" class="nav-link" style="color: rgb(95, 58, 31)">Men</a>

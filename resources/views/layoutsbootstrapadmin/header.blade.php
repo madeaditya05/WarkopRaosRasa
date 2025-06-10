@@ -35,7 +35,6 @@
 
   <!-- Teks "Warkop Raos Rasa" di tengah atas -->
   <div style="text-align: center; margin-top: 20px;">
-    <h1>Warkop Raos Rasa</h1>
   </div>
 </body>
 </html>
