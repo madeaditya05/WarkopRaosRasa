@@ -1,7 +1,5 @@
 <?php
 
-// app/Http/Controllers/PembelianBahanBakuController.php
-
 namespace App\Http\Controllers;
 
 use App\Models\Supplier;
@@ -10,83 +8,107 @@ use App\Models\TransaksiPembelianBahanBaku;
 use App\Models\DetailTransaksiPembelianBahanBaku;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Barryvdh\DomPDF\Facade\Pdf;
-use App\Exports\PembelianExport;
-use Maatwebsite\Excel\Facades\Excel;
 
 class PembelianBahanBakuController extends Controller
 {
     public function create()
     {
         $suppliers = Supplier::all();
-        $bahanBakus = BahanBaku::all();
+        $bahanBakus = BahanBaku::all(); // untuk autocomplete nama bahan, satuan & harga
         return view('pembelianbahanbaku.create', compact('suppliers', 'bahanBakus'));
     }
-
-    public function show($id)
-    {
-        $transaksi = TransaksiPembelianBahanBaku::with('supplier', 'details.bahanBaku')->findOrFail($id);
-        return view('pembelian.show', compact('transaksi'));
-    }
-
-    public function exportPDF($id)
-    {
-        $transaksi = TransaksiPembelianBahanBaku::with('supplier', 'details.bahanBaku')->findOrFail($id);
-        $pdf = PDF::loadView('pembelian.pdf', compact('transaksi'));
-        return $pdf->download('transaksi-pembelian-'.$id.'.pdf');
-    }
-
 
     public function store(Request $request)
 {
     $request->validate([
         'supplier_id' => 'required|exists:supplier,id',
         'tanggal' => 'required|date',
-        'items.*.bahan_baku_id' => 'required|exists:bahan_baku,id',
-        'items.*.jumlah' => 'required|integer|min:1',
-        'items.*.harga_satuan' => 'required|integer|min:0',
+        'items' => 'required|array|min:1',
+        'items.*.nama_bahan' => 'required|string',
+        'items.*.jumlah' => 'required|numeric|min:1',
+        'items.*.satuan' => 'nullable|string',
+        'items.*.harga_satuan' => 'nullable|numeric|min:0',
     ]);
 
-    DB::transaction(function () use ($request) {
-        // Inisialisasi subtotal total
-        $subtotalTotal = 0;
+    DB::beginTransaction();
 
-        // Buat transaksi terlebih dahulu
+    try {
         $transaksi = TransaksiPembelianBahanBaku::create([
             'supplier_id' => $request->supplier_id,
             'tanggal' => $request->tanggal,
-            'subtotal' => 0, // sementara 0, akan diupdate nanti
+            'subtotal' => 0,
         ]);
 
-        // Simpan setiap detail dan hitung subtotalnya
-        foreach ($request->items as $item) {
-            $subtotal = $item['jumlah'] * $item['harga_satuan'];
-            $subtotalTotal += $subtotal;
+        $totalSubtotal = 0;
+        $processedBahan = [];
 
-            DetailTransaksiPembelianBahanBaku::create([
-                'transaksi_id' => $transaksi->id,
-                'bahan_baku_id' => $item['bahan_baku_id'],
-                'jumlah' => $item['jumlah'],
-                'harga_satuan' => $item['harga_satuan'],
-                'subtotal' => $subtotal,
-            ]);
+        foreach ($request->items as $item) {
+            $namaBahan = trim($item['nama_bahan']);
+            $jumlah = (float) $item['jumlah'];
+            $hargaSatuanInput = isset($item['harga_satuan']) ? (float) $item['harga_satuan'] : 0;
+            $satuanInput = $item['satuan'] ?? 'unit';
+
+            // Cek apakah bahan sudah ada
+            $bahan = BahanBaku::whereRaw('LOWER(nama_bahan) = ?', [strtolower($namaBahan)])->first();
+
+            if (!$bahan) {
+                // Buat bahan baru
+                $kodeBahan = $this->generateKodeBahan();
+                $bahan = BahanBaku::create([
+                    'kode_bahan' => $kodeBahan,
+                    'nama_bahan' => $namaBahan,
+                    'jumlah' => $jumlah,
+                    'satuan' => $satuanInput,
+                    'harga_per_satuan' => $hargaSatuanInput,
+                ]);
+            } else {
+                // Update stok bahan lama
+                $bahan->jumlah += $jumlah;
+                $bahan->harga_per_satuan = $hargaSatuanInput > 0 ? $hargaSatuanInput : $bahan->harga_per_satuan;
+                $bahan->save();
+            }
+
+            $hargaSatuan = $bahan->harga_per_satuan;
+
+            // Tambahkan ke detail transaksi
+            if (isset($processedBahan[$bahan->id])) {
+                $detail = DetailTransaksiPembelianBahanBaku::find($processedBahan[$bahan->id]);
+                $detail->jumlah += $jumlah;
+                $detail->subtotal = $detail->jumlah * $hargaSatuan;
+                $detail->save();
+            } else {
+                $detail = DetailTransaksiPembelianBahanBaku::create([
+                    'transaksi_id' => $transaksi->id,
+                    'bahan_baku_id' => $bahan->id,
+                    'jumlah' => $jumlah,
+                    'harga_satuan' => $hargaSatuan,
+                    'subtotal' => $jumlah * $hargaSatuan,
+                ]);
+                $processedBahan[$bahan->id] = $detail->id;
+            }
+
+            $totalSubtotal += $jumlah * $hargaSatuan;
         }
 
-        // Update subtotal total ke transaksi
-        $transaksi->update([
-            'subtotal' => $subtotalTotal,
-        ]);
-    });
+        // Update total subtotal transaksi
+        $transaksi->subtotal = $totalSubtotal;
+        $transaksi->save();
 
-    return redirect()->route('transaksi.index')->with('success', 'Transaksi berhasil disimpan');
-}
+        DB::commit();
 
-public function exportIndexPDF()
-{
-    $transaksis = TransaksiPembelianBahanBaku::with('supplier')->get();
-    $pdf = PDF::loadView('transaksipembelianbahanbaku.pdf', compact('transaksis'))->setPaper('a4', 'landscape');
-    return $pdf->download('daftar-transaksi-pembelian.pdf');
+        return redirect()->route('bahanbaku.index')->with('success', 'Transaksi berhasil disimpan dan stok bahan diperbarui.');
+    } catch (\Exception $e) {
+        DB::rollBack();
+        return back()->withErrors('Terjadi kesalahan: ' . $e->getMessage())->withInput();
+    }
 }
 
 
+    // Fungsi untuk generate kode bahan otomatis (contoh: DD-005, DD-006, dst)
+    private function generateKodeBahan()
+    {
+        $latest = BahanBaku::orderBy('id', 'desc')->first();
+        $nextNumber = $latest ? ((int) filter_var($latest->kode_bahan, FILTER_SANITIZE_NUMBER_INT)) + 1 : 1;
+        return 'DD-' . str_pad($nextNumber, 3, '0', STR_PAD_LEFT);
+    }
 }

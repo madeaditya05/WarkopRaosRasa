@@ -30,4 +30,5 @@ class DetailTransaksiPembelianBahanBaku extends Model
     {
         return $this->belongsTo(BahanBaku::class, 'bahan_baku_id');
     }
+    
 }

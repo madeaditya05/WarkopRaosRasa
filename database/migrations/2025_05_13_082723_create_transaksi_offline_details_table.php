@@ -12,12 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('transaksi_offline_detail', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('transaksi_offline_id')->constrained()->onDelete('cascade');
-        $table->foreignId('menu_makanan_id')->constrained()->onDelete('cascade');
+        $table->id();
+        $table->foreignId('transaksi_offline_id')->constrained("transaksi_offline")->onDelete('cascade');
+        $table->foreignId('menu_makanan_id')->constrained("menu_makanan")->onDelete('cascade');
         $table->integer('jumlah');
         $table->decimal('subtotal', 10, 2);
-            $table->timestamps();
+        $table->timestamps();
         });
     }
 

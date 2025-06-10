@@ -35,51 +35,32 @@ class BahanBakuController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
-        $validated = $request->validate([
-            'kode_bahan' => 'required',
-            'nama_bahan' => 'required|max:100',
-            'jumlah' => 'required|integer|min:0',
-            'satuan' => 'required|max:20',
-            'harga_per_satuan' => 'required|numeric',
-        ]);
-
-        BahanBaku::create($validated);
-        return redirect()->route('bahanbaku.index')->with('success', 'BahanBaku berhasil ditambahkan');
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(BahanBaku $bahanBaku)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(BahanBaku $bahanbaku)
 {
-    return view('bahanbaku.edit', compact('bahanbaku'));
+    $validated = $request->validate([
+        'kode_bahan' => 'required',
+        'nama_bahan' => 'required|max:100',
+        'jumlah' => 'required|integer|min:0',
+        'satuan' => 'required|max:20',
+        'harga_per_satuan' => 'required|numeric',
+    ]);
+
+    // Cek apakah nama_bahan sudah ada
+    $existingBahan = BahanBaku::where('nama_bahan', $validated['nama_bahan'])->first();
+
+    if ($existingBahan) {
+        // Jika ada, update jumlah saja
+        $existingBahan->jumlah += $validated['jumlah'];
+        $existingBahan->save();
+
+        return redirect()->route('bahanbaku.index')->with('success', 'Jumlah Bahan Baku berhasil ditambahkan');
+    } else {
+        // Jika belum ada, insert baru
+        BahanBaku::create($validated);
+
+        return redirect()->route('bahanbaku.index')->with('success', 'Bahan Baku baru berhasil ditambahkan');
+    }
 }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, BahanBaku $bahanbaku)
-    {
-        $validated = $request->validate([
-            'kode_bahan' => 'required',
-            'nama_bahan' => 'required|max:100',
-            'jumlah' => 'required',
-            'satuan' => 'required',
-            'harga_per_satuan' => 'required',
-        ]);
-
-        $bahanbaku->update($validated);
-        return redirect()->route('bahanbaku.index')->with('success', 'BahanBaku berhasil diperbarui');
-    }
 
     /**
      * Remove the specified resource from storage.
