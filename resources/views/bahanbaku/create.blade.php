@@ -1,114 +1,123 @@
 @extends('layoutsbootstrapadmin')
 
 @section('konten')
+<div class="container mt-4">
+    <div class="card shadow-sm rounded">
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">Tambah Bahan Baku</h4>
+        </div>
 
-<div class="body-wrapper">
-    <header class="app-header">
-        <nav class="navbar navbar-expand-lg navbar-light">
-            <ul class="navbar-nav">
-                <li class="nav-item d-block d-xl-none">
-                    <a class="nav-link sidebartoggler nav-icon-hover" id="headerCollapse" href="javascript:void(0)">
-                        <i class="ti ti-menu-2"></i>
-                    </a>
-                </li>
-            </ul>
-        </nav>
-    </header>
+        <div class="card-body">
+            <form action="{{ route('bahanbaku.store') }}" method="POST">
+                @csrf
 
-    <div class="container-fluid">
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title fw-semibold mb-4">Tambah Bahan Baku</h5>
-
-                <!-- Menampilkan Error Validasi -->
-                @if ($errors->any())
-                    <div class="alert alert-danger">
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
+                <div class="row mb-3">
+                    <label for="kode_bahan" class="col-sm-3 col-form-label">Kode Bahan</label>
+                    <div class="col-sm-9">
+                        <input type="text" name="kode_bahan" id="kode_bahan" class="form-control" value="{{ $kode_bahan }}" readonly>
                     </div>
-                @endif
-                <!-- Akhir Error Validasi -->
+                </div>
 
-                <form action="{{ route('bahanbaku.store') }}" method="POST" class="p-4 rounded shadow-lg bg-white">
-                    @csrf
-
-                    <h3 class="mb-4 text-center text-primary"><i class="bi bi-box"></i> Tambah Bahan Baku</h3>
-
-                    <fieldset disabled>
-                        <div class="mb-3">
-                            <label for="kodebahanlabel">Kode Bahan</label>
-                            <input class="form-control form-control-solid" id="kode_bahan_tampil" name="kode_bahan_tampil" type="text" value="{{$kode_bahan}}" readonly>
-                        </div>
-                    </fieldset>
-                    <input type="hidden" id="kode_bahan" name="kode_bahan" value="{{$kode_bahan}}">
-
-                    <div class="mb-3">
-                        <label for="nama_bahan" class="form-label fw-bold"><i class="bi bi-tag"></i> Nama Bahan</label>
-                        <input type="text" class="form-control border-primary shadow-sm" id="nama_bahan" name="nama_bahan"
-                            value="{{ old('nama_bahan') }}" placeholder="Masukkan nama bahan" required>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="jumlah" class="form-label fw-bold"><i class="bi bi-tag"></i> Jumlah</label>
-                        <input type="number" step="0.01" class="form-control border-primary shadow-sm" id="jumlah" name="jumlah"
-                            value="{{ old('jumlah') }}" placeholder="Masukkan jumlah" required>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="satuan" class="form-label fw-bold"><i class="bi bi-rulers"></i> Satuan</label>
-                        <select class="form-select border-primary shadow-sm" id="satuan" name="satuan" required>
-                            <option value="">-- Pilih Satuan --</option>
-                            <option value="Pcs" {{ old('satuan') == 'Pcs' ? 'selected' : '' }}>Pcs</option>
-                            <option value="Lusin" {{ old('satuan') == 'Lusin' ? 'selected' : '' }}>Lusin</option>
-                            <option value="Kodi" {{ old('satuan') == 'Kodi' ? 'selected' : '' }}>Kodi</option>
-                            <option value="Gross" {{ old('satuan') == 'Gross' ? 'selected' : '' }}>Gross</option>
-                            <option value="Rim" {{ old('satuan') == 'Rim' ? 'selected' : '' }}>Rim</option>
-                            <option value="Kg" {{ old('satuan') == 'Kg' ? 'selected' : '' }}>Kg</option>
-                            <option value="Dus atau paket" {{ old('satuan') == 'Dus atau paket' ? 'selected' : '' }}>Dus atau paket</option>
+                <div class="row mb-3">
+                    <label for="nama_bahan" class="col-sm-3 col-form-label">Nama Bahan</label>
+                    <div class="col-sm-9">
+                        <select name="nama_bahan" id="nama_bahan" class="form-select" required>
+                            <option value="">-- Pilih Bahan --</option>
+                            <option value="telur">Telur</option>
+                            <option value="beras">Beras</option>
+                            <option value="rempah">Rempah</option>
+                            <option value="mie">Mie</option>
+                            <option value="teh sariwangi">Teh Sariwangi</option>
+                            <option value="es">Es</option>
+                            <option value="krupuk">Krupuk</option>
+                            <option value="gula">Gula</option>
+                            <option value="saos">Saos</option>
+                            <option value="kecap">Kecap</option>
                         </select>
                     </div>
+                </div>
 
-                    <div class="mb-3">
-                        <label for="harga_per_satuan" class="form-label fw-bold"><i class="bi bi-currency-dollar"></i> Harga Per Satuan</label>
-                        <input type="number" step="0.01" class="form-control border-primary shadow-sm" id="harga_per_satuan" name="harga_per_satuan"
-                            value="{{ old('harga_per_satuan') }}" placeholder="Masukkan harga" required>
+                <div class="row mb-3">
+                    <label for="jumlah" class="col-sm-3 col-form-label">Jumlah</label>
+                    <div class="col-sm-9">
+                        <input type="number" name="jumlah" id="jumlah" class="form-control" min="0" required>
                     </div>
+                </div>
 
-                    <div class="mb-3">
-                        <label for="subtotal" class="form-label fw-bold"><i class="bi bi-calculator"></i> Subtotal</label>
-                        <input type="number" step="0.01" class="form-control border-primary shadow-sm" id="subtotal" name="subtotal"
-                            value="{{ old('subtotal') }}" placeholder="Subtotal akan terisi otomatis" readonly>
+                <div class="row mb-3">
+                    <label for="satuan" class="col-sm-3 col-form-label">Satuan</label>
+                    <div class="col-sm-9">
+                        <input type="text" name="satuan" id="satuan" class="form-control" readonly>
                     </div>
+                </div>
 
-                    <button type="submit" class="btn btn-success">Simpan</button>
-                    <a href="{{ route('bahanbaku.index') }}" class="btn btn-dark">Batal</a>
-                </form>
-            </div>
+                <div class="row mb-3">
+                    <label for="harga_per_satuan" class="col-sm-3 col-form-label">Harga per Satuan</label>
+                    <div class="col-sm-9">
+                        <input type="number" name="harga_per_satuan" id="harga_per_satuan" class="form-control" readonly>
+                    </div>
+                </div>
+
+                <div class="row mb-4">
+                    <label for="subtotal" class="col-sm-3 col-form-label">Subtotal</label>
+                    <div class="col-sm-9">
+                        <input type="text" id="subtotal" class="form-control" readonly>
+                    </div>
+                </div>
+
+                <div class="text-end">
+                    <button type="submit" class="btn btn-success">
+                        <i class="bi bi-save"></i> Simpan</button>
+                    <a href="{{ route('bahanbaku.index') }}" class="btn btn-secondary">
+                        <i class="bi bi-arrow-left-circle"></i> Batal
+                    </a>
+                </div>
+            </form>
         </div>
     </div>
 </div>
 
-@endsection
-
-@push('scripts')
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const jumlahInput = document.getElementById('jumlah');
-        const hargaInput = document.getElementById('harga_per_satuan');
-        const subtotalInput = document.getElementById('subtotal');
+    const bahanData = {
+        "telur": { satuan: "Kg", harga: 28000 },
+        "beras": { satuan: "Kg", harga: 18655 },
+        "rempah": { satuan: "Kg", harga: 32000 },
+        "mie": { satuan: "Dus", harga: 14000 },
+        "teh sariwangi": { satuan: "Kotak", harga: 9800 },
+        "es": { satuan: "Kg", harga: 5000 },
+        "krupuk": { satuan: "Kg", harga: 16000 },
+        "gula": { satuan: "Kg", harga: 15200 },
+        "saos": { satuan: "Botol", harga: 11500 },
+        "kecap": { satuan: "Botol", harga: 12500 }
+    };
 
-        function updateSubtotal() {
-            const jumlah = parseFloat(jumlahInput.value) || 0;
-            const harga = parseFloat(hargaInput.value) || 0;
-            const subtotal = jumlah * harga;
-            subtotalInput.value = subtotal.toFixed(2);
+    const namaBahan = document.getElementById('nama_bahan');
+    const satuan = document.getElementById('satuan');
+    const harga = document.getElementById('harga_per_satuan');
+    const jumlah = document.getElementById('jumlah');
+    const subtotal = document.getElementById('subtotal');
+
+    namaBahan.addEventListener('change', () => {
+        const selected = namaBahan.value;
+        if (bahanData[selected]) {
+            satuan.value = bahanData[selected].satuan;
+            harga.value = bahanData[selected].harga;
+            hitungSubtotal();
+        } else {
+            satuan.value = '';
+            harga.value = '';
+            subtotal.value = '';
         }
-
-        jumlahInput.addEventListener('input', updateSubtotal);
-        hargaInput.addEventListener('input', updateSubtotal);
     });
+
+    jumlah.addEventListener('input', hitungSubtotal);
+    harga.addEventListener('input', hitungSubtotal);
+
+    function hitungSubtotal() {
+        const jml = parseFloat(jumlah.value) || 0;
+        const hrg = parseFloat(harga.value) || 0;
+        const sub = jml * hrg;
+        subtotal.value = sub.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' });
+    }
 </script>
-@endpush
+@endsection

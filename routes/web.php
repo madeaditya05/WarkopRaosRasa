@@ -13,6 +13,10 @@ use App\Http\Controllers\DetailTransaksiPembelianBahanBakuController;
 use App\Http\Controllers\PembelianBahanBakuController;
 use App\Http\Controllers\MidtransController;
 use App\Http\Controllers\DashboardController;
+use Phpml\Clustering\KMeans;
+use Illuminate\Support\Facades\DB;
+use App\Filament\Pages\ClusteringVisual;
+use App\Http\Controllers\MachineLearningController;
 
 use App\Http\Controllers\PenjualanController;
 use App\Http\Controllers\TransaksiOfflineController;
@@ -130,6 +134,17 @@ Route::get('/dashboard_admin', [DashboardController::class, 'index'])->name('das
 // Pembelian bahan baku
 Route::get('/transaksi', [TransaksiPembelianBahanBakuController::class, 'index'])->name('transaksi.index');
 Route::post('/transaksi/{id}/bayar', [TransaksiPembelianBahanBakuController::class, 'bayar'])->name('transaksi.bayar');
+
+//Minggu 06/08/2025 (GIBETTTT)
+Route::get('/bahanbaku', [BahanBakuController::class, 'index'])->name('bahanbaku.index');
+Route::get('/bahan-baku/{id}', [\App\Http\Controllers\BahanBakuController::class, 'getBahanBaku']);
+Route::get('/debug-supplier', function () {
+return (new Supplier)->getTable(); // Output harus "supplier"
+});
+
+Route::get('/clustering-chart', [MachineLearningController::class, 'clusteringChart'])->name('clustering.chart');
+
+
 
 Route::get('/pembelian/create', [PembelianBahanBakuController::class, 'create'])->name('pembelian.create');
 Route::post('/pembelian/store', [PembelianBahanBakuController::class, 'store'])->name('pembelian.store');

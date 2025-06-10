@@ -12,12 +12,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('transaksi_offline', function (Blueprint $table) {
-            $table->id();
-            $table->string('no_faktur')->unique();
-            $table->foreignId('pelanggan_id')->constrained()->onDelete('cascade');
-            $table->dateTime('tanggal_pesan');
-            $table->decimal('total_harga', 10, 2)->default(0);
-            $table->timestamps();
+    $table->id();
+    $table->string('no_faktur')->unique();
+    $table->foreignId('pelanggan_id')->constrained('pelanggan')->onDelete('cascade');
+    $table->dateTime('tanggal_pesan');
+    $table->decimal('total_harga', 10, 2)->default(0);
+    $table->timestamps();
+
         });
     }
 

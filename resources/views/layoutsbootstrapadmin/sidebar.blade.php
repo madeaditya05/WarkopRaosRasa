@@ -39,6 +39,14 @@
               </a>
             </li>
 
+            <!-- Menu Clustering -->
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="{{ url('/clustering-chart') }}">
+                    <i class="ti ti-graph"></i>
+                    <span class="hide-menu">Penjualan</span>
+                </a>
+            </li>
+
             <li class="nav-small-cap">
               <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
               <span class="hide-menu">Masterdata</span>
